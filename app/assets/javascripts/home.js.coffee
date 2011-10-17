@@ -3,6 +3,7 @@ window.onload = -> initialize()
 initialize = -> 
   myOptions = 
 		zoom:      14
+		mapTypeId: google.maps.MapTypeId.ROADMAP
 		center:    haight
 	haight = new google.maps.LatLng(37.7699298, -122.4469157)
 	oceanBeach = new google.maps.LatLng(37.7683909618184, -122.51089453697205)
