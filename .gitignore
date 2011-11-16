@@ -3,4 +3,4 @@
 *.log
 *.sql
 *.sqlite
-
+log/development.log
