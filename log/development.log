@@ -12296,3 +12296,80 @@ Served asset /waypoints.js - 304 Not Modified (0ms)
 
 Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2011-11-16 06:48:38 -0500
 Served asset /application.js - 304 Not Modified (1ms)
+
+
+Started GET "/routes/4ea53c6b41656844d7000002" for 127.0.0.1 at 2011-11-16 06:55:44 -0500
+  Processing by RoutesController#show as HTML
+  Parameters: {"id"=>"4ea53c6b41656844d7000002"}
+MONGODB slabless_development['system.namespaces'].find({})
+MONGODB slabless_development['routes'].find({:_id=>BSON::ObjectId('4ea53c6b41656844d7000002')}).limit(-1).sort([[:_id, :asc]])
+Rendered routes/show.html.erb within layouts/routes (139.2ms)
+Completed 200 OK in 159ms (Views: 154.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2011-11-16 06:55:45 -0500
+Served asset /application.css - 304 Not Modified (1ms)
+
+
+Started GET "/assets/itn_files.css?body=1" for 127.0.0.1 at 2011-11-16 06:55:45 -0500
+Served asset /itn_files.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/routes.css?body=1" for 127.0.0.1 at 2011-11-16 06:55:45 -0500
+Served asset /routes.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/home.css?body=1" for 127.0.0.1 at 2011-11-16 06:55:45 -0500
+Served asset /home.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/ratings.css?body=1" for 127.0.0.1 at 2011-11-16 06:55:45 -0500
+Served asset /ratings.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/waypoints.css?body=1" for 127.0.0.1 at 2011-11-16 06:55:45 -0500
+Served asset /waypoints.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2011-11-16 06:55:45 -0500
+Served asset /jquery.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/livequery.js?body=1" for 127.0.0.1 at 2011-11-16 06:55:45 -0500
+Served asset /livequery.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2011-11-16 06:55:45 -0500
+Served asset /jquery_ujs.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/scaffolds.css?body=1" for 127.0.0.1 at 2011-11-16 06:55:45 -0500
+Served asset /scaffolds.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2011-11-16 06:55:45 -0500
+Served asset /home.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/itn_files.js?body=1" for 127.0.0.1 at 2011-11-16 06:55:45 -0500
+Served asset /itn_files.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/maps.js?body=1" for 127.0.0.1 at 2011-11-16 06:55:45 -0500
+Served asset /maps.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/ratings.js?body=1" for 127.0.0.1 at 2011-11-16 06:55:45 -0500
+Served asset /ratings.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/waypoints.js?body=1" for 127.0.0.1 at 2011-11-16 06:55:45 -0500
+Served asset /waypoints.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/routes.js?body=1" for 127.0.0.1 at 2011-11-16 06:55:45 -0500
+Served asset /routes.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2011-11-16 06:55:45 -0500
+Served asset /application.js - 304 Not Modified (1ms)
