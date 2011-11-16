@@ -1,4 +1,10 @@
 Slabless::Application.routes.draw do
+  resources :routes do
+    resources :ratings
+    resources :waypoints
+    resources :itn_files
+  end
+
   get "home/index"
 
   # The priority is based upon order of creation:

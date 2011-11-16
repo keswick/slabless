@@ -6,4 +6,6 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require livequery
 //= require_tree .
+

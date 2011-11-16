@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @route.name %>
+</p>
+
+<p>
+  <b>Destination:</b>
+  <%= @route.destination %>
+</p>
+
+<% if @route.waypoints.size > 0 %>
+	<div id="route_canvas" style="width:100%; height:100%"></div>
+  <h2>Waypoints</h2>
+  <% for waypoint in @route.waypoints %>
+    <%= waypoint.latitude %> <%= waypoint.longitude %> <%= waypoint.name %><br />
+  <% end %>
+<% end %>
+
+<% if @route.ratings.size > 0 %>
+  <h2>Ratings</h2>
+  <% for rating in @route.ratings %>
+    <p><%= rating.overall %> <%= rating.comment %></p>
+  <% end %>
+<% end %>
+
+<h2>New Rating</h2>
+
+<%= form_for [@route, Rating.new] do |f| %>
+  <p><%= f.label :overall %> <%= f.text_field :overall %></p>
+  <p><%= f.text_area :comment, :rows => 10 %></p>
+  <p><%= f.submit %></p>
+<% end %>
+
+<h2>Add Waypoints</h2>
+
+<%= form_for [@route, ItnFile.new] do |f| %>
+  <p><%= f.text_area :content, :rows => 10 %></p>
+  <p><%= f.submit %></p>
+<% end %>
+
+<%= link_to 'Edit', edit_route_path(@route) %> |
+<%= link_to 'Back', routes_path %>
+

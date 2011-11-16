@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Slabless - Routes Layout</title>
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+	  html { height: 100% }
+	  body { height: 100%; margin: 0; padding: 0 }
+	  #route_canvas { height: 100% }
+	</style>
+</head>
+<body>
+
+<%= yield %>
+
+</body>
+</html>
