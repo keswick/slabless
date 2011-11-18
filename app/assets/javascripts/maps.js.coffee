@@ -8,11 +8,15 @@ create_map = ->
   	mapTypeId: google.maps.MapTypeId.ROADMAP
   	center: haight
   map = new google.maps.Map(document.getElementById("route_canvas"), myOptions);
-  calcRoute(map, haight, oceanBeach)
-	calcRoute(map, gratton, sunset)
+  waypoints = []
+  waypoints.push 
+    location: gratton
+    stopover: false
+  calcRoute(map, haight, oceanBeach, waypoints)
+	# calcRoute(map, gratton, sunset)
 	alert "Hello 2"
 	
-calcRoute = (map, orig, dest) ->
+calcRoute = (map, orig, dest, waypts) ->
 	directionsService = new google.maps.DirectionsService()
 	directionsRenderer = new google.maps.DirectionsRenderer()
 	directionsRenderer.setMap(map)
@@ -20,6 +24,7 @@ calcRoute = (map, orig, dest) ->
     origin: orig
     destination: dest
     travelMode: "DRIVING"
+    waypoints: waypts
   directionsService.route(request, (response, status) ->
 	  directionsRenderer.setDirections(response) if status == google.maps.DirectionsStatus.OK )
 	
