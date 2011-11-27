@@ -11,7 +11,14 @@
 </p>
 
 <% if @route.waypoints.size > 0 %>
-	<div id="route_canvas" style="width:100%; height:100%"></div>
+	<script type="text/javascript">
+		waypts = [];
+		<%- @route.waypoints.each do |w| %>
+			var waypt = new google.maps.LatLng(<%= w.latitude %>, <%= w.longitude %>);
+			waypts.push ({ location: waypt, stopover: false })
+		<%- end %>
+	</script>
+	<div id="route_canvas" style="width:90%; height:100%"></div>
   <h2>Waypoints</h2>
   <% for waypoint in @route.waypoints %>
     <%= waypoint.latitude %> <%= waypoint.longitude %> <%= waypoint.name %><br />

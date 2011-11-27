@@ -1,30 +1,35 @@
 create_map = ->
-	haight = new google.maps.LatLng(37.7699298, -122.4469157);
-	oceanBeach = new google.maps.LatLng(37.7683909618184, -122.51089453697205)
-	gratton = new google.maps.LatLng(37.7628, -122.4509)
-	sunset = new google.maps.LatLng(37.7486, -122.4975)
-	myOptions = 
-  	zoom: 14
-  	mapTypeId: google.maps.MapTypeId.ROADMAP
-  	center: haight
+  myOptions = 
+    zoom: 14
+    mapTypeId: google.maps.MapTypeId.ROADMAP
   map = new google.maps.Map(document.getElementById("route_canvas"), myOptions);
-  waypoints = []
-  waypoints.push 
-    location: gratton
-    stopover: false
-  calcRoute(map, haight, oceanBeach, waypoints)
+  calcRoute(map)
 	# calcRoute(map, gratton, sunset)
-	alert "Hello 2"
 	
-calcRoute = (map, orig, dest, waypts) ->
-	directionsService = new google.maps.DirectionsService()
-	directionsRenderer = new google.maps.DirectionsRenderer()
-	directionsRenderer.setMap(map)
-	request = 
-    origin: orig
-    destination: dest
-    travelMode: "DRIVING"
+calcRoute = (map) ->
+  marker_image = new google.maps.MarkerImage('/assets/motorcycling.png')
+  marker_shadow = new google.maps.MarkerImage('/assets/motorcycling.shadow.png')
+  directionsService = new google.maps.DirectionsService()
+  renderOptions =
+    suppressMarkers: true
+  directionsRenderer = new google.maps.DirectionsRenderer(renderOptions)
+  directionsRenderer.setMap(map)
+  orig = waypts.shift()
+  dest = waypts.pop()
+  marker = new google.maps.Marker(
+    draggable: true
+    icon: marker_image
+    shadow: marker_shadow
+    map: map
+    position: orig.location
+    )
+  request = 
+    origin: orig.location
+    destination: dest.location
     waypoints: waypts
+    travelMode: "DRIVING"
+    avoidHighways: true
+    avoidTolls: true
   directionsService.route(request, (response, status) ->
 	  directionsRenderer.setDirections(response) if status == google.maps.DirectionsStatus.OK )
 	
