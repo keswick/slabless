@@ -1,5 +1,12 @@
 <h1>Listing routes</h1>
 
+<% if @routes.size > 0 %>
+	<script type="text/javascript">
+	  routes = <%= raw @routes.to_json %>;
+	</script>
+	<div id="route_canvas" style="width:90%; height:100%"></div>
+<% end %>
+
 <table>
   <tr>
     <th>Name</th>
@@ -21,5 +28,7 @@
 </table>
 
 <br />
+
+<div id="r_zone"></div>
 
 <%= link_to 'New Route', new_route_path %>

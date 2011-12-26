@@ -12,11 +12,9 @@
 
 <% if @route.waypoints.size > 0 %>
 	<script type="text/javascript">
-		waypts = [];
-		<%- @route.waypoints.each do |w| %>
-			var waypt = new google.maps.LatLng(<%= w.latitude %>, <%= w.longitude %>);
-			waypts.push ({ location: waypt, stopover: false })
-		<%- end %>
+	  var route = <%= raw @route.to_json %>;
+	  routes = [];
+	  routes.push(route);
 	</script>
 	<div id="route_canvas" style="width:90%; height:100%"></div>
   <h2>Waypoints</h2>
@@ -40,13 +38,16 @@
   <p><%= f.submit %></p>
 <% end %>
 
-<h2>Add Waypoints</h2>
+<% if @route.waypoints.size == 0 %>
+  <h2>Add Waypoints</h2>
 
-<%= form_for [@route, ItnFile.new] do |f| %>
-  <p><%= f.text_area :content, :rows => 10 %></p>
-  <p><%= f.submit %></p>
+  <%= form_for [@route, ItnFile.new] do |f| %>
+    <p><%= f.text_area :content, :rows => 10 %></p>
+    <p><%= f.submit %></p>
+  <% end %>
 <% end %>
 
+<div id="r_zone"></div>
 <%= link_to 'Edit', edit_route_path(@route) %> |
 <%= link_to 'Back', routes_path %>
 

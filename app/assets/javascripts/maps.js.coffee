@@ -1,37 +1,60 @@
-create_map = ->
-  myOptions = 
+# show_route = (map, route) ->
+
+show_route = (map, route) ->
+  g_waypts = (set_g_waypt(waypt.latitude, waypt.longitude) for waypt in route.waypoints)
+  marker = setup_marker()
+  marker.setPosition(g_waypts[0].location)
+  marker.setMap(map)
+  i=0
+  while i < g_waypts.length-1
+    end = if i+9 < g_waypts.length then i+9 else g_waypts.length-1
+    orig = g_waypts[i].location
+    dest = g_waypts[end].location
+    wpts = g_waypts.slice(i+1, end)
+    calc_route(map, true, orig, dest, wpts)
+    i = i + 9
+
+set_g_waypt = (lat, lng) ->
+  return (location: new google.maps.LatLng(lat, lng), stopover: false)
+
+setup_map = ->
+  mapOptions = 
     zoom: 14
     mapTypeId: google.maps.MapTypeId.ROADMAP
-  map = new google.maps.Map(document.getElementById("route_canvas"), myOptions);
-  calcRoute(map)
-	# calcRoute(map, gratton, sunset)
+  map = new google.maps.Map(document.getElementById("route_canvas"), mapOptions);
 	
-calcRoute = (map) ->
+setup_marker = ->
   marker_image = new google.maps.MarkerImage('/assets/motorcycling.png')
   marker_shadow = new google.maps.MarkerImage('/assets/motorcycling.shadow.png')
-  directionsService = new google.maps.DirectionsService()
-  renderOptions =
-    suppressMarkers: true
-  directionsRenderer = new google.maps.DirectionsRenderer(renderOptions)
-  directionsRenderer.setMap(map)
-  orig = waypts.shift()
-  dest = waypts.pop()
   marker = new google.maps.Marker(
     draggable: true
     icon: marker_image
     shadow: marker_shadow
-    map: map
-    position: orig.location
     )
+
+render_route = (map, directions_response) ->
+  renderOptions = suppressMarkers: true
+  renderer = new google.maps.DirectionsRenderer(renderOptions)
+  renderer.setMap(map)
+  renderer.setDirections(directions_response)
+
+calc_route = (map, render_flag, orig, dest, wpts) ->
   request = 
-    origin: orig.location
-    destination: dest.location
-    waypoints: waypts
+    origin: orig
+    destination: dest
+    waypoints: wpts
     travelMode: "DRIVING"
     avoidHighways: true
     avoidTolls: true
-  directionsService.route(request, (response, status) ->
-	  directionsRenderer.setDirections(response) if status == google.maps.DirectionsStatus.OK )
+  dirService = new google.maps.DirectionsService()
+  dirService.route(request, (response, status) ->
+    if status == google.maps.DirectionsStatus.OK
+      render_route(map, response) if render_flag == true
+      window.jumps.push(response)
+      $("#r_zone").append JSON.stringify(response)
+  )
 	
 $('#route_canvas').livequery ->
-	create_map()
+  map = setup_map()
+  window.jumps = new Array
+  show_route(map, route) for route in routes
