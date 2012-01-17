@@ -21,6 +21,7 @@ class ItnFile
       waypoint.latitude = w_split[1].insert(3, ".")
       waypoint.longitude = w_split[0].insert(3, ".")
       waypoint.name = w_split[2]
+      waypoint.loc = [waypoint.latitude.to_f, waypoint.longitude.to_f]
       self.route.waypoints << waypoint
     end
   end

@@ -8,4 +8,5 @@ class Waypoint
   field :link
   field :loc
   embedded_in :route, :inverse_of => :waypoints
+  index [[ :loc, Mongo::GEO2D ]]
 end

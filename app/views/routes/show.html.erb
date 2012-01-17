@@ -10,17 +10,41 @@
   <%= @route.destination %>
 </p>
 
-<% if @route.waypoints.size > 0 %>
+<% unless @route.empty? || @route.confirmed? %>
 	<script type="text/javascript">
 	  var route = <%= raw @route.to_json %>;
 	  routes = [];
 	  routes.push(route);
 	</script>
-	<div id="route_canvas" style="width:90%; height:100%"></div>
-  <h2>Waypoints</h2>
-  <% for waypoint in @route.waypoints %>
-    <%= waypoint.latitude %> <%= waypoint.longitude %> <%= waypoint.name %><br />
+	<div id="map_canvas" style="width:90%; height:100%"></div>
+	<%= form_for(@route) do |f| %>
+	  <div class="field">
+	    <%= f.text_area :jumps, :rows=>24, :cols=>140 %>
+	  </div>
+	  <div class="actions">
+	    <%= f.submit "Confirm Map" %>
+	  </div>
+	<% end %>
+<% end %>
+
+<% if @route.confirmed? %>
+	<script type="text/javascript">
+	  json_jump = <%= raw @route.jumps %>;
+	</script>
+	<div id="map_canvas_confirmed" style="width:90%; height:100%"></div>
+<% end %>
+
+<% if @route.empty? %>
+  <h2>Add Waypoints</h2>
+  <%= form_for [@route, ItnFile.new] do |f| %>
+    <p><%= f.text_area :content, :rows => 10 %></p>
+    <p><%= f.submit %></p>
   <% end %>
+<% else %>
+	<h2>Waypoints</h2>
+	<% for waypoint in @route.waypoints %>
+  	<%= waypoint.latitude %> <%= waypoint.longitude %> <%= waypoint.name %><br />
+		<% end %>
 <% end %>
 
 <% if @route.ratings.size > 0 %>
@@ -38,16 +62,7 @@
   <p><%= f.submit %></p>
 <% end %>
 
-<% if @route.waypoints.size == 0 %>
-  <h2>Add Waypoints</h2>
-
-  <%= form_for [@route, ItnFile.new] do |f| %>
-    <p><%= f.text_area :content, :rows => 10 %></p>
-    <p><%= f.submit %></p>
-  <% end %>
-<% end %>
-
-<div id="r_zone"></div>
 <%= link_to 'Edit', edit_route_path(@route) %> |
 <%= link_to 'Back', routes_path %>
 
+<div id="response_zone"></div>

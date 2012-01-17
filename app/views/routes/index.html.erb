@@ -4,7 +4,7 @@
 	<script type="text/javascript">
 	  routes = <%= raw @routes.to_json %>;
 	</script>
-	<div id="route_canvas" style="width:90%; height:100%"></div>
+	<div id="map_canvas" style="width:90%; height:100%"></div>
 <% end %>
 
 <table>
@@ -29,6 +29,6 @@
 
 <br />
 
-<div id="r_zone"></div>
-
 <%= link_to 'New Route', new_route_path %>
+
+<div id="response_zone"></div>

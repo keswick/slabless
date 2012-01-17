@@ -6,8 +6,8 @@ gem 'rails', '3.1.1'
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
-gem "mongoid", "~> 2.3"
-gem "bson_ext", "~> 1.4"
+gem "mongoid", "~> 2.4"
+gem "bson_ext", "~> 1.5"
 
 # Gems used only for assets and not required
 # in production environments by default.
