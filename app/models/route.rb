@@ -6,6 +6,7 @@ class Route
   field :jumps
   embeds_many :ratings
   embeds_many :waypoints
+  embeds_many :overview_points
   embeds_one :itn_file
   validates_presence_of :name, :destination
   
