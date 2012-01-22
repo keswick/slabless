@@ -11,6 +11,7 @@ class Route
   validates_presence_of :name, :destination
   
   #git test - update from desktop
+  #git test - update from mbp
 
   def empty?
     waypoints.size == 0    
