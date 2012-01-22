@@ -1,4 +1,6 @@
 Slabless::Application.routes.draw do
+  resources :overview_points
+
   resources :routes do
     resources :ratings
     resources :waypoints

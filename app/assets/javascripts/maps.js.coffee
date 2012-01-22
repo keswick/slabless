@@ -46,7 +46,7 @@ calc_jump = (orig, dest, wpts) ->
   dirService.route(request, (response, status) ->
     if status == google.maps.DirectionsStatus.OK
       render_route(response)
-      window.jumps.push(response)
+      window.jumps.push(JSON.stringify(response))
       # current_value = $("#route_jumps").val()
       # $("#route_jumps").val(current_value + JSON.stringify(response))
       # alert($("#route_jumps").val().length)
@@ -58,8 +58,21 @@ $('#map_canvas').livequery ->
   window.jumps = new Array
   calc_route(route) for route in routes
 
-$('#map_canvas_confirmed').livequery ->
-  mapOptions = zoom: 14, mapTypeId: google.maps.MapTypeId.ROADMAP
-  window.map_canvas = new google.maps.Map(document.getElementById("map_canvas_confirmed"), mapOptions);
-  # render_route(jump) for jump in jumps
-  render_route(json_jump)
+$('form.edit_route').livequery ->
+  $(this).submit( (event) ->
+    $('#route_jumps').val(window.jumps)
+    #event.preventDefault()
+    #formValues = $(this).serialize
+    #url = $(this).attr('action')
+    #$.post(url, formValues, () ->
+    #  alert("submitted")
+    #)
+  )
+
+#$('#map_canvas_confirmed').livequery ->
+#  mapOptions = zoom: 14, mapTypeId: google.maps.MapTypeId.ROADMAP
+#  window.map_canvas = new google.maps.Map(document.getElementById("map_canvas_confirmed"), mapOptions);
+#  render_route(jump) for jump in jumps
+#  render_route(json_jump)
+
+
