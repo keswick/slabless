@@ -10,6 +10,8 @@ class Route
   embeds_one :itn_file
   validates_presence_of :name, :destination
   
+  #git test - update from desktop
+
   def empty?
     waypoints.size == 0    
   end
