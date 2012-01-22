@@ -1,0 +1,23 @@
+<h1>Listing overview_points</h1>
+
+<table>
+  <tr>
+    <th>Latlng</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @overview_points.each do |overview_point| %>
+  <tr>
+    <td><%= overview_point.latlng %></td>
+    <td><%= link_to 'Show', overview_point %></td>
+    <td><%= link_to 'Edit', edit_overview_point_path(overview_point) %></td>
+    <td><%= link_to 'Destroy', overview_point, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Overview point', new_overview_point_path %>
