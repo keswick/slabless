@@ -10,8 +10,10 @@ class ItnFile
   protected
   
   def groom
-    self.route.itn_file.destroy
-    self.route.waypoints.each {|w| w.destroy}
+    unless self.route.itn_file.nil?
+      self.route.itn_file.destroy
+      self.route.waypoints.each { |w| w.destroy }
+    end
   end
   
   def create_waypoints

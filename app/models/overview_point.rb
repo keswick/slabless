@@ -2,7 +2,7 @@ class OverviewPoint
   include Mongoid::Document
   include Mongoid::Spacial::Document
   
-  field :latlng, :type => Array, :spatial => true
+  field :latlng, :type => Array, :spacial => true
   
-  spatial_index :latlng
+  spacial_index :latlng
 end
