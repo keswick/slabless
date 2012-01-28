@@ -46,10 +46,7 @@ calc_jump = (orig, dest, wpts) ->
   dirService.route(request, (response, status) ->
     if status == google.maps.DirectionsStatus.OK
       render_route(response)
-      window.jumps.push(JSON.stringify(response))
-      # current_value = $("#route_jumps").val()
-      # $("#route_jumps").val(current_value + JSON.stringify(response))
-      # alert($("#route_jumps").val().length)
+      window.jumps.push(response)
   )
 	
 $('#map_canvas').livequery ->
@@ -60,13 +57,12 @@ $('#map_canvas').livequery ->
 
 $('form.edit_route').livequery ->
   $(this).submit( (event) ->
-    $('#route_jumps').val(window.jumps)
-    #event.preventDefault()
-    #formValues = $(this).serialize
-    #url = $(this).attr('action')
-    #$.post(url, formValues, () ->
-    #  alert("submitted")
-    #)
+    jumps = ""
+    $.each(window.jumps, (i, rte) ->
+      jumps += JSON.stringify(rte)
+      jumps += '--BREAK--'
+    )
+    $('#route_jumps').val(jumps)
   )
 
 #$('#map_canvas_confirmed').livequery ->

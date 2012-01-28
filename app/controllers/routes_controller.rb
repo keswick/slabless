@@ -57,7 +57,6 @@ class RoutesController < ApplicationController
   # PUT /routes/1.json
   def update
     @route = Route.find(params[:id])
-    debugger
     respond_to do |format|
       if @route.update_attributes(params[:route])
         format.html { redirect_to @route, notice: 'Route was successfully updated.' }
