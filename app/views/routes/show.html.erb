@@ -10,28 +10,22 @@
   <%= @route.destination %>
 </p>
 
+<script type="text/javascript">
+  var route = <%= raw @route.to_json %>;
+  routes = [];
+  routes.push(route);
+</script>
+
+<div id="map_canvas" style="width:90%; height:100%"></div>
 <% unless @route.empty? || @route.confirmed? %>
-	<script type="text/javascript">
-	  var route = <%= raw @route.to_json %>;
-	  routes = [];
-	  routes.push(route);
-	</script>
-	<div id="map_canvas" style="width:90%; height:100%"></div>
 	<%= form_for(@route) do |f| %>
 	  <div class="field">
-	    <%= f.text_area :jumps, :rows=>24, :cols=>140 %>
+	    <%= f.hidden_field :jumps %>
 	  </div>
 	  <div class="actions">
 	    <%= f.submit "Confirm Map" %>
 	  </div>
 	<% end %>
-<% end %>
-
-<% if @route.confirmed? %>
-	<script type="text/javascript">
-	  json_jump = <%= raw @route.jumps %>;
-	</script>
-	<div id="map_canvas_confirmed" style="width:90%; height:100%"></div>
 <% end %>
 
 <% if @route.empty? %>

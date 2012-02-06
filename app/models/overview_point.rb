@@ -5,5 +5,4 @@ class OverviewPoint
   field :latlng, :type => Array, :spacial => true
   embedded_in :route, :inverse_of => :overview_points
   
-  spacial_index :latlng
 end
