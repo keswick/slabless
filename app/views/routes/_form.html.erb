@@ -19,12 +19,8 @@
     <%= f.label :destination %><br />
     <%= f.text_field :destination %>
   </div>
-  <div class="field">
-    <%= f.label :jumps %><br />
-    <%= f.text_area :jumps, :rows=>24, :cols=>140 %>
-  </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit %> <%= link_to 'Cancel', routes_path %>
   </div>
 <% end %>
 

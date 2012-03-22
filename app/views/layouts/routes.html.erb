@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+  "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
 <head>
   <title>Slabless - Routes Layout</title>
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
@@ -7,15 +8,22 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-	<style type="text/css">
-	  html { height: 100% }
-	  body { height: 100%; margin: 0; padding: 0 }
-	  #route_canvas { height: 100% }
-	</style>
 </head>
 <body>
-
-<%= yield %>
+	<div id="page">
+			<div id="header">
+			</div>
+			<div id="middle">
+				<%= yield %>
+			</div>
+			<div id="footer"> <!-- start of the footer -->      
+        <p id="copyright">Copyright &copy; 2011 Guzzista Software, LLC, all rights reserved.</p>
+        <p id="privacy_and_terms">
+          <a href="terms.html">Terms of Service</a> |
+          <a href="privacy.html">Privacy Policy</a>
+        </p>
+      </div> <!-- end of the footer -->
+	</div>
 
 </body>
 </html>

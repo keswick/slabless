@@ -18,13 +18,15 @@ class ItnFile
   
   def create_waypoints
     self.content.each_line do |w|
-      w_split = w.split('|')
-      waypoint = Waypoint.new
-      waypoint.latitude = w_split[1].insert(3, ".")
-      waypoint.longitude = w_split[0].insert(3, ".")
-      waypoint.name = w_split[2]
-      waypoint.loc = [waypoint.latitude.to_f, waypoint.longitude.to_f]
-      self.route.waypoints << waypoint
+      w_split = w.strip.split('|')
+      if w_split.size == 4 && w_split[0].length > 4 && w_split[1].length > 0
+        waypoint = Waypoint.new
+        waypoint.latitude = w_split[1][0] =~ /[\+\-]/ ? w_split[1].insert(3, ".") : w_split[1].insert(2, ".")
+        waypoint.longitude = w_split[0][0] =~ /[\+\-]/ ? w_split[0].insert(3, ".") : w_split[0].insert(2, ".")
+        waypoint.name = w_split[2]
+        waypoint.loc = [waypoint.latitude.to_f, waypoint.longitude.to_f]
+        self.route.waypoints << waypoint
+      end
     end
   end
   

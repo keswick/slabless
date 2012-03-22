@@ -1,0 +1,57 @@
+html{
+  height:100%;
+}
+
+body {
+  height:100%;
+}
+
+body, p, h1, h2, h3, h4, h5, h6, ul, li, form{
+  margin:0;
+  padding:0;
+  line-height:20px;
+}
+
+p, h2, h3, h4, h5, h6{
+  margin-bottom:20px;
+}
+
+#page{
+  display:block;
+  width:100%;
+  margin: 0px auto;
+  height:100%;
+}
+
+#header{
+  height:20px;
+  width:100%;
+  background-color: gray;
+}
+
+  #header img{
+  	margin-top:18px;
+  	margin-left:18px;
+  }
+
+
+#middle{
+	width:100%;
+	height: 100%;
+}
+
+		#middle #main{
+		  height:100%;
+		  margin: 0 0 0 0px; 
+		}
+
+
+#footer{
+	 width:100%;
+	 height:40px;
+	 clear:both;
+}
+
+#map_canvas {
+	height: 100%
+}

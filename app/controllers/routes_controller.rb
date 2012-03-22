@@ -2,8 +2,15 @@ class RoutesController < ApplicationController
   # GET /routes
   # GET /routes.json
   def index
-    @routes = Route.all
-
+    if params[:bounds]
+      coordinates = params[:bounds].split(',')
+      @sw_corner = {:lat => coordinates[0], :lng => coordinates[1]}
+      @ne_corner = {:lat => coordinates[2], :lng => coordinates[3]}
+      @routes = Route.where(:"overview_points.latlng".within(:box) => [@sw_corner, @ne_corner]).all
+    else
+      @routes = []
+    end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @routes }

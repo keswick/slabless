@@ -1,62 +1,75 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Name:</b>
-  <%= @route.name %>
-</p>
-
-<p>
-  <b>Destination:</b>
-  <%= @route.destination %>
-</p>
-
 <script type="text/javascript">
   var route = <%= raw @route.to_json %>;
   routes = [];
   routes.push(route);
 </script>
 
-<div id="map_canvas" style="width:90%; height:100%"></div>
-<% unless @route.empty? || @route.confirmed? %>
-	<%= form_for(@route) do |f| %>
-	  <div class="field">
-	    <%= f.hidden_field :jumps %>
-	  </div>
-	  <div class="actions">
-	    <%= f.submit "Confirm Map" %>
-	  </div>
-	<% end %>
-<% end %>
+<div id="main">
+	<div id="map_canvas"></div>
+</div>
 
-<% if @route.empty? %>
-  <h2>Add Waypoints</h2>
-  <%= form_for [@route, ItnFile.new] do |f| %>
-    <p><%= f.text_area :content, :rows => 10 %></p>
-    <p><%= f.submit %></p>
-  <% end %>
-<% else %>
-	<h2>Waypoints</h2>
-	<% for waypoint in @route.waypoints %>
-  	<%= waypoint.latitude %> <%= waypoint.longitude %> <%= waypoint.name %><br />
+<div id="route_box">
+	<div id="route_title">Slabless Routes</div>
+	<div id="route_content">
+		<% unless notice.nil? %>
+			<p id="notice"><%= notice %></p>
 		<% end %>
-<% end %>
+		<%= render "route_actions" %>		
+		
+		<% unless @route.empty? || @route.confirmed? %>
+			<%= form_for(@route) do |f| %>
+			  <div class="field">
+			    <%= f.hidden_field :jumps %>
+			  </div>
+			  <div class="actions">
+			    <%= f.submit "Confirm Map" %>
+			  </div>
+			<% end %>
+		<% end %>
+		
+		<ul>
+			<li><%= @route.name %></li>
+			<li><%= @route.destination %></li>
+			<li><%= link_to("#{@route.waypoints.size} waypoints", "#", :id => "expand_waypoints") unless @route.waypoints.empty? %></li>
+		</ul>
+		
+		<div id="route_waypoints" class="hidden">
+		  <% unless @route.waypoints.empty? %>
+				<ol>
+				<% for waypoint in @route.waypoints %>
+		  		<li><%= waypoint.name %></li>
+				<% end %>
+				</ol>
+			<% end %>
+		</div>
+		
+		<div id="route_ratings" class="hidden">
+		  <% if @route.ratings.size > 0 %>
+			  <h2>Ratings</h2>
+			  <% for rating in @route.ratings %>
+			    <p><%= rating.overall %> <%= rating.comment %></p>
+			  <% end %>
+			<% end %>
+      
+			<h2>New Rating</h2>
+      
+			<%= form_for [@route, Rating.new] do |f| %>
+			  <p><%= f.label :overall %> <%= f.text_field :overall %></p>
+			  <p><%= f.text_area :comment, :rows => 10 %></p>
+			  <p><%= f.submit %></p>
+			<% end %>
+		</div>	
+		
+		<% if @route.waypoints.empty? %>
+			<h2>Add Waypoints</h2>
+			<%= form_for [@route, ItnFile.new] do |f| %>
+			  <p><%= f.text_area :content, :rows => 10 %></p>
+			  <p><%= f.submit %></p>
+			<% end %>
+		<% end %>
+  	
+	</div>
+</div>
 
-<% if @route.ratings.size > 0 %>
-  <h2>Ratings</h2>
-  <% for rating in @route.ratings %>
-    <p><%= rating.overall %> <%= rating.comment %></p>
-  <% end %>
-<% end %>
 
-<h2>New Rating</h2>
 
-<%= form_for [@route, Rating.new] do |f| %>
-  <p><%= f.label :overall %> <%= f.text_field :overall %></p>
-  <p><%= f.text_area :comment, :rows => 10 %></p>
-  <p><%= f.submit %></p>
-<% end %>
-
-<%= link_to 'Edit', edit_route_path(@route) %> |
-<%= link_to 'Back', routes_path %>
-
-<div id="response_zone"></div>
