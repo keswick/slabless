@@ -1,4 +1,20 @@
-<h2>Add new route</h2>
+<div id="main">
+	<div id="route_builder_map"></div>
+</div>
 
-<%= render 'form' %>
+<div id="route_box">
+	<div id="route_title">Slab Less - Add Route</div>
+	<div id="route_content">
+		<% unless notice.nil? %>
+			<p id="notice"><%= notice %></p>
+		<% end %>
+		<%= render 'form' %>
+		<div id="route_waypoints">
+				<ul>
+				</ul>
+		</div>				
+	</div>
+</div>
+
+
 

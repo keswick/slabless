@@ -14,10 +14,6 @@ calc_route = (route) ->
 
 set_g_waypt = (lat, lng) ->
   return (location: new google.maps.LatLng(lat, lng), stopover: false)
-
-# setup_map = ->
-  # mapOptions = zoom: 14, mapTypeId: google.maps.MapTypeId.ROADMAP
-  # new google.maps.Map(document.getElementById("map_canvas"), mapOptions)
 	
 setup_marker = ->
   marker_image = new google.maps.MarkerImage('/assets/motorcycling.png')
@@ -57,7 +53,6 @@ $('#map_canvas').livequery ->
   if bounds?
     google.maps.event.addListener(window.map_canvas, 'idle', ->
       window.map_canvas.fitBounds(bounds)
-      # window.map_canvas.setZoom(window.map_canvas.getZoom + 2)
       google.maps.event.addListenerOnce(window.map_canvas, 'mousemove', ->
         google.maps.event.clearListeners(window.map_canvas, 'idle')
       )

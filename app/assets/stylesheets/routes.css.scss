@@ -4,18 +4,17 @@
 
 #route_box
 {
-  	width:320px;
-  	position:absolute;
-  	bottom: 35px;
-  	left: 35px;
-  	background: #DDD;
+  width:320px;
+  position:absolute;
+  bottom: 35px;
+  left: 35px;
+  background: #DDD;
 	border-radius: 5px;
-  	box-shadow: 2px 2px 5px #333;
+  box-shadow: 2px 2px 5px #333;
 }
-
 #route_title
 {
-    width: 320px;
+  width: 320px;
 	height: 32px;
 	background: #3B5998;
 	color: white;
@@ -25,18 +24,15 @@
 	border-top-right-radius: 5px;
 	border-top-left-radius: 5px;
 }
-
 #route_content
 {
 	width: 300px;
 	padding: 0 10px 10px 10px;
 }
-
 	#route_content li
 	{
 		line-height: 16px;
 	}
-
 #route_actions
 {
 	display: block;
@@ -45,9 +41,60 @@
 	font-size: 12px;
 	margin: 6px 0px 10px 0px;
 }
-
 #route_waypoints
 {
-	height:300px;
+	max-height:80%;
 	overflow: auto;
+}
+#directions{
+	position:absolute;
+	width: 23%;
+	right:1%;
+	height: 690px;
+	overflow:auto;
+}
+#menu{
+	background-color: #FFFFFF;
+	width:170px;
+	height:150px;
+	padding:0px;
+	border:1px;
+	cursor:pointer;
+	border-left:1px solid #cccccc;
+	border-top:1px solid #cccccc;
+	border-right:1px solid #676767;
+	border-bottom:1px solid #676767;
+}
+#menu .item{
+	font-family: arial,helvetica,sans-serif;
+	font-size: 12px;
+	text-align:left;
+	line-height: 30px;
+	border-left:0px;
+	border-top:0px;
+	border-right:0px;
+	padding-left:30px;
+	background-repeat: no-repeat;
+	background-position: 4px center;
+}
+#menu .item.itemA{
+	background-image: url(images/icon_greenA.png);
+}
+#menu .item.itemB{
+	background-image: url(images/icon_greenB.png);
+}
+#menu .item.zoomIn{
+	background-image: url(images/zoomin.png);
+}
+#menu .item.zoomOut{
+	background-image: url(images/zoomout.png);
+}
+#menu .item.centerHere{
+	background-image: url(images/here.png);
+}
+#menu .item.hover{
+	background-color: #d6e9f8;
+}
+#menu .item.separator{
+	border-bottom:1px solid #cccccc;
 }
