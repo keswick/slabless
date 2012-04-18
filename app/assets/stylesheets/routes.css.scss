@@ -7,7 +7,7 @@
   width:320px;
   position:absolute;
   bottom: 35px;
-  left: 35px;
+  left: 70px;
   background: #DDD;
 	border-radius: 5px;
   box-shadow: 2px 2px 5px #333;
@@ -45,7 +45,30 @@
 {
 	max-height:80%;
 	overflow: auto;
+	list-style-type: none; 
+	margin: 0px 0px 0px 0px; 
+	padding: 0; 
 }
+  #route_waypoints li 
+	{ 
+		padding: 0.4em; 
+		padding-left: 2.5em; 
+		font-size: 1.1em; 
+		background-color: white;
+		margin-bottom: 2px;
+		height: 16px;
+		border-width: 1px;
+		border-color: grey;
+		border-style: solid;
+		white-space: nowrap;
+		width: 265px;
+	}
+  #route_waypoints li span 
+	{ 
+		position: absolute; 
+		margin-left: -2.3em;
+		margin-top: -0.4em;
+	}
 #directions{
 	position:absolute;
 	width: 23%;
@@ -56,7 +79,7 @@
 #menu{
 	background-color: #FFFFFF;
 	width:170px;
-	height:150px;
+	height:120px;
 	padding:0px;
 	border:1px;
 	cursor:pointer;
@@ -65,7 +88,7 @@
 	border-right:1px solid #676767;
 	border-bottom:1px solid #676767;
 }
-#menu .item{
+.menu_item{
 	font-family: arial,helvetica,sans-serif;
 	font-size: 12px;
 	text-align:left;
@@ -77,24 +100,35 @@
 	background-repeat: no-repeat;
 	background-position: 4px center;
 }
-#menu .item.itemA{
-	background-image: url(images/icon_greenA.png);
+
+.menu_item.waypoint{
+	background-image: url(mc-no-border.png);
 }
-#menu .item.itemB{
-	background-image: url(images/icon_greenB.png);
+.menu_item.zoomIn{
+	background-image: url(zoomin.png);
 }
-#menu .item.zoomIn{
-	background-image: url(images/zoomin.png);
+.menu_item.zoomOut{
+	background-image: url(zoomout.png);
 }
-#menu .item.zoomOut{
-	background-image: url(images/zoomout.png);
+.menu_item.centerHere{
+	background-image: url(here.png);
 }
-#menu .item.centerHere{
-	background-image: url(images/here.png);
+.menu_item.delete{
+	background-image: url(delete.png);
 }
-#menu .item.hover{
+.menu_item.hover{
 	background-color: #d6e9f8;
 }
-#menu .item.separator{
+.menu_item.separator{
 	border-bottom:1px solid #cccccc;
+}
+.sortable_icon
+{
+	background-image: url(draggable.jpg);
+	background-repeat: no-repeat;
+	width: 22px;
+	height: 22px;
+}
+#distance_duration {
+	margin-top: 8px;
 }

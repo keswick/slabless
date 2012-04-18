@@ -6,6 +6,13 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.ui.core.min.js
+//= require jquery.ui.widget.min.js
+//= require jquery.ui.mouse.min.js
+//= require jquery.ui.sortable.min.js
 //= require livequery
-//= require_tree .
+//= require gmap3
+//= require maps
+//= require route_builder
+// require_tree .
 

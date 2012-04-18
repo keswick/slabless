@@ -77,5 +77,3 @@ $('#expand_waypoints').livequery ->
   $(this).click( (event) ->   
     $('#route_waypoints').toggleClass('hidden')
   )
-
-

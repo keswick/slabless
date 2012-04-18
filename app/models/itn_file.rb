@@ -2,7 +2,7 @@ class ItnFile
   include Mongoid::Document
   include Mongoid::Timestamps
   field :content, :type => String
-  embedded_in :route
+  embedded_in :route, :inverse_of => :itn_file
   
   before_create :groom
   after_create :create_waypoints

@@ -19,6 +19,12 @@
     <%= f.label :destination %><br />
     <%= f.text_field :destination %>
   </div>
+	<%= f.fields_for :itn_file do |builder| %>
+		<div class="field">
+	    <%= builder.label :content, "Waypoints" %><br />
+	    <%= builder.text_area :content, :rows => 3 %>
+	  </div>
+	<% end %>
   <div class="actions">
     <%= f.submit %> <%= link_to 'Cancel', routes_path %>
   </div>
