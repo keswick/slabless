@@ -106,6 +106,8 @@ $('#route_builder_map').livequery(function(){
       
       current,  // current click event (used to save as start / end position)
       center = [40.5310, -76.685];
+	
+	window.jumps = new Array;
   
   // update marker
   function updateMarker(marker, isM1){
@@ -245,6 +247,7 @@ function updateDirections($map, selector){
 			var meters = results.routes[0].legs[0].distance.value;
 			var seconds = results.routes[0].legs[0].duration.value;
 			setDistanceAndTime(meters, seconds);
+			window.jumps.push(results);
 			$(this).gmap3({
 			  action:'addDirectionsRenderer',
 			  options:{
@@ -320,6 +323,7 @@ function redrawDirections($map) {
 	var clear = {action:'clear', name:'directionrenderer'};
 	$map.gmap3(clear);
 	clearDistanceDurationTotals();
+	window.jumps = [];
 	$('#route_waypoints li').each(function(index, listItem) {
 		updateDirections($map, listItem.id); 
 	});
@@ -345,4 +349,20 @@ $('#sortable_waypoints').livequery(function(){
 	});
 	$(this).disableSelection();
 });
-  
+
+$('form.new_route').livequery(function(){
+  $(this).submit(function(event) { 
+    var jumps = "";
+    $.each(window.jumps, function(i, rte) {
+      jumps += JSON.stringify(rte);
+      jumps += '--BREAK--';
+    });
+    $('#route_jumps').val(jumps);
+		var itn_file = ""
+		$('#route_waypoints li').each(function(index, listItem) {
+			var ll = toLatLng(listItem.id)
+			itn_file += ll.lng() + '|' + ll.lat() + '|' + listItem.textContent + '|0|\n' 
+		});
+		$('#route_itn_file').val(itn_file);
+  });
+});  

@@ -35,11 +35,11 @@
 		
 		<div id="route_waypoints" class="hidden">
 		  <% unless @route.waypoints.empty? %>
-				<ol>
+				<ul>
 				<% for waypoint in @route.waypoints %>
 		  		<li><%= waypoint.name %></li>
 				<% end %>
-				</ol>
+				</ul>
 			<% end %>
 		</div>
 		

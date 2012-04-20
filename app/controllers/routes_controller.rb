@@ -21,8 +21,6 @@ class RoutesController < ApplicationController
   # GET /routes/1.json
   def show
     @route = Route.find(params[:id])
-    debugger
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @route }
@@ -33,7 +31,6 @@ class RoutesController < ApplicationController
   # GET /routes/new.json
   def new
     @route = Route.new
-    @route.build_itn_file
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @route }
@@ -48,10 +45,7 @@ class RoutesController < ApplicationController
   # POST /routes
   # POST /routes.json
   def create
-    input = params[:route]
-    debugger
     @route = Route.new(params[:route])
-
     respond_to do |format|
       if @route.save
         format.html { redirect_to @route, notice: 'Route was successfully created.' }

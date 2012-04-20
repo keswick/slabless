@@ -5,16 +5,18 @@ class Route
   field :name
   field :destination
   field :jumps
+  field :itn_file
   embeds_many :ratings
   embeds_many :waypoints
   embeds_many :overview_points
-  embeds_one :itn_file
-  accepts_nested_attributes_for :itn_file
+  # embeds_one :itn_file
+  # accepts_nested_attributes_for :itn_file
   
   spacial_index 'overview_points.latlng'
   
   validates_presence_of :name, :destination
   
+  after_save :parse_itn, :if => :itn_file_changed?
   after_save :parse_jumps, :if => :jumps_changed?
   
   def empty?
@@ -27,23 +29,22 @@ class Route
   
   protected
   
-  def groom_waypoints
-    unless self.route.itn_file.nil?
-      self.route.itn_file.destroy
-      self.route.waypoints.each { |w| w.destroy }
-    end
-  end
-  
   def parse_itn
-    self.content.each_line do |w|
+    waypoints.each { |w| w.destroy } unless waypoints.nil?
+    self.itn_file.each_line do |w|
       w_split = w.strip.split('|')
       if w_split.size == 4 && w_split[0].length > 4 && w_split[1].length > 0
         waypoint = Waypoint.new
-        waypoint.latitude = w_split[1][0] =~ /[\+\-]/ ? w_split[1].insert(3, ".") : w_split[1].insert(2, ".")
-        waypoint.longitude = w_split[0][0] =~ /[\+\-]/ ? w_split[0].insert(3, ".") : w_split[0].insert(2, ".")
+        if w_split[0].include? "."
+          waypoint.latitude = w_split[1]
+          waypoint.longitude = w_split[0]
+        else
+          waypoint.latitude = w_split[1][0] =~ /[\+\-]/ ? w_split[1].insert(3, ".") : w_split[1].insert(2, ".")
+          waypoint.longitude = w_split[0][0] =~ /[\+\-]/ ? w_split[0].insert(3, ".") : w_split[0].insert(2, ".")
+        end
         waypoint.name = w_split[2]
         waypoint.loc = [waypoint.latitude.to_f, waypoint.longitude.to_f]
-        self.route.waypoints << waypoint
+        self.waypoints << waypoint
       end
     end
   end
