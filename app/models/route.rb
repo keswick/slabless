@@ -9,8 +9,6 @@ class Route
   embeds_many :ratings
   embeds_many :waypoints
   embeds_many :overview_points
-  # embeds_one :itn_file
-  # accepts_nested_attributes_for :itn_file
   
   spacial_index 'overview_points.latlng'
   
