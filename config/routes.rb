@@ -5,6 +5,9 @@ Slabless::Application.routes.draw do
     resources :ratings
     resources :waypoints
   end
+  
+  match "/auth/:provider/callback" => "sessions#create"
+  match "/signout" => "sessions#destroy", :as => :signout
 
   get "routes/index"
 

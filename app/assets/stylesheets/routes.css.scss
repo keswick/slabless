@@ -27,7 +27,7 @@
 #route_content
 {
 	width: 300px;
-	padding: 0 10px 10px 10px;
+	padding: 10px 10px 10px 10px;
 }
 	#route_content li
 	{
@@ -132,3 +132,53 @@
 #distance_duration {
 	margin-top: 8px;
 }
+#route_name {
+	font-size: 15px;
+	font-weight: bold;
+	margin-top: 6px;
+}
+#info_pane { 
+	position: absolute; 
+	padding: 10px; 
+	width: 350px; 
+	border: 3px solid #FFF; 
+	background: #DDD url(http://icons.wxug.com/i/wxmap/background.gif) repeat-x top left; 
+	-moz-border-radius: 5px; 
+	-webkit-border-radius: 5px; 
+	-webkit-box-shadow: 2px 2px 5px #888; 
+	z-index: 5000; 
+}
+#info_pane #info_pane_close { 
+	background: url(http://icons.wxug.com/i/wxmap/close.png) right no-repeat; 
+	display: block; 
+	color: #000; 
+	font-size: 14px; 
+	font-weight: bold; 
+	width: 24px; 
+	height: 24px; 
+	line-height: 24px; 
+	position: absolute; 
+	top: -15px; 
+	right: -15px; 
+	float: right; 
+	text-decoration: none; 
+}
+#info_pane #info_pane_content { 
+	max-height: 400px; 
+	overflow-y: auto; 
+	overflow-x: hidden; 
+	clear: both; 
+}
+
+#action_box { font-size: 11px; border: 1px solid #000; margin-bottom: 10px; position: absolute; top: 7px; left: 100px; width: 420px; line-height: 16px; overflow: hidden; white-space: nowrap; background: #FFF; }
+#action_box .action_link { text-decoration: none; display: block; width: 80px; padding: 1px; text-align: center; float: left; border-top: 1px solid #FFF; border-right: 1px solid #BEBEBE; border-bottom: 1px solid #BEBEBE; border-left: 1px solid #FFF; }
+#action_box .active {
+	color: #000;
+}
+#action_box .inactive {
+	color: gray;
+}
+
+
+
+

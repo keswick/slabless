@@ -9,4 +9,9 @@ class Waypoint
   field :loc
   embedded_in :route, :inverse_of => :waypoints
   index [[ :loc, Mongo::GEO2D ]]
+  
+  def selector
+    id = latitude + 'BREAK' + longitude
+    return id.gsub(/\./, "_")
+  end
 end

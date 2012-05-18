@@ -28,7 +28,7 @@ class Route
   protected
   
   def parse_itn
-    waypoints.each { |w| w.destroy } unless waypoints.nil?
+    waypoints.delete_all
     self.itn_file.each_line do |w|
       w_split = w.strip.split('|')
       if w_split.size == 4 && w_split[0].length > 4 && w_split[1].length > 0
@@ -48,7 +48,7 @@ class Route
   end
   
   def parse_jumps
-    overview_points.each { |p| p.destroy } unless overview_points.nil?
+    overview_points.delete_all
     j_split = self.jumps.split(/--BREAK--/)
     j_split.each do |jump|
       json_jump = JSON.parse(jump)

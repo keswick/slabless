@@ -1,25 +1,40 @@
+<script type="text/javascript">
+	<% unless @routes.empty? %>
+		<% g_adjustment = 0.034 %>
+		var sw = new google.maps.LatLng(<%= @sw_corner[:lat].to_f + g_adjustment %>, <%= @sw_corner[:lng].to_f + g_adjustment %>);
+		var ne = new google.maps.LatLng(<%= @ne_corner[:lat].to_f - g_adjustment %>, <%= @ne_corner[:lng].to_f - g_adjustment %> );
+		bounds = new google.maps.LatLngBounds(sw,ne);
+	<% end %>
+  routes = <%= raw @routes.to_json %>;
+</script>
+
 <div id="main">
-	<script type="text/javascript">
-		<% unless @routes.empty? %>
-			<% g_adjustment = 0.034 %>
-			var sw = new google.maps.LatLng(<%= @sw_corner[:lat].to_f + g_adjustment %>, <%= @sw_corner[:lng].to_f + g_adjustment %>);
-			var ne = new google.maps.LatLng(<%= @ne_corner[:lat].to_f - g_adjustment %>, <%= @ne_corner[:lng].to_f - g_adjustment %> );
-			bounds = new google.maps.LatLngBounds(sw,ne);
-		<% end %>
-	  routes = <%= raw @routes.to_json %>;
-	</script>
 	<div id="map_canvas"></div>
 </div>
 
-<div id="route_box">
-	<div id="route_title">Slabless Routes</div>
-	<div id="route_content">
-		<%= render "route_actions" %>
-  	<ul>	
-		<% @routes.each do |route| %>
-		    <li><%= link_to route.name, route %></li>
-		<% end %>
-		</ul>
-	</div>
+<div id="action_box">
+		<span><a href="/routes" title="Show all routes with current map boundaries" id="show_routes_within_map" class="active action_link">routes</a></span>
+		<span><a href="/routes/new" title="Create a new route" id="add_route" class="active action_link">add...</a></span>
+		<span><a href="javascript:void(0);" title="Export this route to a GPS friendly format" id="export_route" class="inactive action_link">export...</a></span>
+		<span>
+			<% if current_user %>
+			  <%= link_to "sign out", signout_path, :id => "login", :class => "active action_link" %>
+			<% else %>
+			  <%= link_to "sign in", "/auth/facebook", :id => "login", :class => "active action_link" %>
+			<% end %>
+		</span>
 </div>
+
+<% unless @routes.empty? %>
+	<div id="route_box">
+		<div id="route_title">Slabless Routes</div>
+		<div id="route_content">
+	  	<ul>	
+			<% @routes.each do |route| %>
+			    <li><%= link_to route.name, route %></li>
+			<% end %>
+			</ul>
+		</div>
+	</div>
+<% end %>
 

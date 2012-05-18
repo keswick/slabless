@@ -2,6 +2,19 @@
 	<div id="route_builder_map"></div>
 </div>
 
+<div id="action_box">
+		<span><a href="javascript:void(0);" title="Show all routes with current map boundaries" id="show_routes_within_map" class="inactive action_link">routes</a></span>
+		<span><a href="javascript:void(0);" title="Create a new route" id="add_route" class="inactive action_link">add...</a></span>
+		<span><a href="javascript:void(0);" title="Export this route to a GPS friendly format" id="export_route" class="inactive action_link">export...</a></span>
+		<span>
+			<% if current_user %>
+			  <%= link_to "sign out", signout_path, :id => "login", :class => "active action_link" %>
+			<% else %>
+			  <%= link_to "sign in", "/auth/facebook", :id => "login", :class => "active action_link" %>
+			<% end %>
+		</span>
+</div>
+
 <div id="route_box">
 	<div id="route_title">Slab Less - Add Route</div>
 	<div id="route_content">

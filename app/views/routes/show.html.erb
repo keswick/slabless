@@ -8,14 +8,26 @@
 	<div id="map_canvas"></div>
 </div>
 
+<div id="action_box">
+		<span><a href="/routes" title="Show all routes with current map boundaries" id="show_routes_within_map" class="active action_link">Routes</a></span>
+		<span><a href="/routes/new" title="Create a new route" id="add_route" class="active action_link">Add...</a></span>
+		<span><a href="javascript:void(0);" title="Export this route to a GPS friendly format" id="export_route" class="active action_link">Export...</a></span>
+		<span><%= link_to "Modify", edit_route_path(@route), :id => "edit_route", :class => "active action_link" %></span>
+		<span>
+			<% if current_user %>
+			  <%= link_to "Sign Out", signout_path, :id => "login", :class => "active action_link" %>
+			<% else %>
+			  <%= link_to "Sign in", "/auth/facebook", :id => "login", :class => "active action_link" %>
+			<% end %>
+		</span>
+</div>
+
 <div id="route_box">
 	<div id="route_title">Slab Less Routes</div>
 	<div id="route_content">
 		<% unless notice.nil? %>
 			<p id="notice"><%= notice %></p>
 		<% end %>
-		<%= render "route_actions" %>		
-		
 		<% unless @route.empty? || @route.confirmed? %>
 			<%= form_for(@route) do |f| %>
 			  <div class="field">
@@ -28,9 +40,9 @@
 		<% end %>
 		
 		<ul>
-			<li><%= @route.name %></li>
+			<li id="route_name"><%= @route.name %></li>
 			<li><%= @route.destination %></li>
-			<li><%= link_to("#{@route.waypoints.size} waypoints", "#", :id => "expand_waypoints") unless @route.waypoints.empty? %></li>
+			<li><%= link_to("#{@route.waypoints.size} waypoints", "javascript:void(0);", :id => "expand_waypoints") unless @route.waypoints.empty? %></li>
 		</ul>
 		
 		<div id="route_waypoints" class="hidden">
@@ -68,6 +80,12 @@
 			<% end %>
 		<% end %>
   	
+	</div>
+</div>
+<div id="info_pane" class="hidden" style="position: absolute; top: 296px; left: 772px; ">
+	<a href="javascript:void(0);" title="Close Window" id="info_pane_close">&nbsp;</a>
+	<div id="info_pane_content">
+		<a name="top"></a>
 	</div>
 </div>
 

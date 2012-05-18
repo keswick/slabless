@@ -77,3 +77,25 @@ $('#expand_waypoints').livequery ->
   $(this).click( (event) ->   
     $('#route_waypoints').toggleClass('hidden')
   )
+
+$('#info_pane_close').livequery ->
+  $(this).click( (event) ->   
+    $('#info_pane').toggleClass('hidden')
+  )
+
+$('#export_route').livequery ->
+  $(this).click( (event) ->   
+    $('#info_pane').toggleClass('hidden')
+    $('#info_pane_content').html(to_navigon(routes[0]))
+  )
+
+to_navigon = (route) ->
+  nav_waypts = (set_nav_waypt(waypt.latitude, waypt.longitude) for waypt in route.waypoints)
+  nav_route_url = "navigonUSA-PA://route/?"
+  $.each(nav_waypts, (i, wpt) ->
+    nav_route_url += wpt
+    nav_route_url += "&" if i < nav_waypts.length-1 )
+  return nav_route_url
+
+set_nav_waypt = (lat, lng) ->
+  return "target=coordinate//#{lng}/#{lat}"

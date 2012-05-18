@@ -100,83 +100,19 @@ Menu.prototype.close = function(){
  **************************************************/
 
 $('#route_builder_map').livequery(function(){
-
   var $map = $('#route_builder_map'), 
-      menu = new Menu($map),
-      
+      menu = new Menu($map),     
       current,  // current click event (used to save as start / end position)
       center = [40.5310, -76.685];
 	
+	window.map = $map;
 	window.jumps = new Array;
-  
-  // update marker
-  function updateMarker(marker, isM1){
-    if (isM1){
-      m1 = marker;
-    } else {
-      m2 = marker;
-    }
-    updateDirections();
-  }
-  
-  // add marker and manage which one it is (A, B)
-  function addMarker(){
-    // add marker and store it
-		var ll_id = toSelector(current.latLng);
-    $map.gmap3({
-      action:'addMarker',
-      latLng:current.latLng,
-      options:{
-        draggable:false,
-        icon:new google.maps.MarkerImage('/assets/motorcycle.png')
-      },
-      tag: ll_id,
-      events: {
-        rightclick: function(marker, event){
-				  console.log('in click event');
-				  var map = $(this).gmap3('get'),
-				    infowindow = $(this).gmap3({action:'get', name:'infowindow'});
-					ll_id = toSelector(marker.getPosition());
-					delete_link_html = '<a class="menu_item delete" href="#" onclick="deleteWaypoint(this)" data-tag="' + ll_id + '">Delete this Waypoint</a>'
-				  if (infowindow){
-				    infowindow.open(map, marker);
-				    infowindow.setContent(delete_link_html);
-				  } else {
-				    $(this).gmap3({action:'addinfowindow', anchor:marker, options:{content: delete_link_html}});
-				  }
-				}
-      },
-      callback: function(marker){
-				writeWaypointLI(marker);
-				updateDirections($map, ll_id);
-      }
-    });
-  }
-
-  function writeWaypointLI(marker){
-		var ul = $('#route_waypoints ul');
-		var max_height = ($('#route_builder_map').height() * .75) - ($('#route_box').height() - ul.height());
-		if (ul.height() < max_height) { ul.height("auto") };
-		ul.append('<li id="' + toSelector(current.latLng) + '" class="sortable_icon"></li>');
-		ul.height(ul.height());
-	  $map.gmap3({
-			action: 'getAddress',
-			latLng: marker.getPosition(),
-			callback: function(results){
-				address = results && results[0] ? results && results[0].formatted_address : 'no address';
-				content = address.replace(/(.*),.*$/, "$1");
-				ll = toSelector(current.latLng);
-				$('#' + ll).html(content);
-			}
-		});
-		$('#route_waypoints').scrollTop(10000);
-	}
 
   // MENU : ITEM 1
   menu.add('Add Waypoint', 'waypoint separator', 
     function(){
       menu.close();
-      addMarker();
+      addMarker(current.latLng);
     });
   
   // MENU : ITEM 2
@@ -228,13 +164,66 @@ $('#route_builder_map').livequery(function(){
   );
 });
 
+// add marker and manage which one it is (A, B)
+function addMarker(latLng){
+  // add marker and store it
+	var ll_id = toSelector(latLng);
+  window.map.gmap3({
+    action: 'addMarker',
+    latLng: latLng,
+    options: {
+      draggable:false,
+      icon:new google.maps.MarkerImage('/assets/motorcycle.png')
+    },
+    tag: ll_id,
+    events: {
+      rightclick: function(marker, event){
+			  // console.log('in click event');
+			  var map = $(this).gmap3('get'),
+			    infowindow = $(this).gmap3({action:'get', name:'infowindow'});
+				ll_id = toSelector(marker.getPosition());
+				delete_link_html = '<a class="menu_item delete" href="#" onclick="deleteWaypoint(this)" data-tag="' + ll_id + '">Delete this Waypoint</a>'
+			  if (infowindow){
+			    infowindow.open(map, marker);
+			    infowindow.setContent(delete_link_html);
+			  } else {
+			    $(this).gmap3({action:'addinfowindow', anchor:marker, options:{content: delete_link_html}});
+			  }
+			}
+    },
+    callback: function(marker){
+			writeWaypointLI(marker);
+			updateDirections(ll_id);
+    }
+  });
+}
+
+function writeWaypointLI(marker){
+	var ul = $('#route_waypoints ul');
+	var latLng = marker.getPosition();
+	var selector = toSelector(latLng);
+	var max_height = (window.map.height() * .75) - ($('#route_box').height() - ul.height());
+	if (ul.height() < max_height) { ul.height("auto") };
+	ul.append('<li id="' + selector + '" class="sortable_icon"></li>');
+	ul.height(ul.height());
+  window.map.gmap3({
+		action: 'getAddress',
+		latLng: latLng,
+		callback: function(results){
+			address = results && results[0] ? results && results[0].formatted_address : 'no address';
+			content = address.replace(/(.*),.*$/, "$1");
+			$('#' + selector).html(content);
+		}
+	});
+	$('#route_waypoints').scrollTop(10000);
+}
 // function called to update directions
-function updateDirections($map, selector){
+function updateDirections(selector){
 	var prev_li = $('#' + selector).prev();
 	var origin_wpt = toLatLng(prev_li.attr('id'));
 	if (!origin_wpt) return;
 	var dest_wpt = toLatLng(selector)
-	$map.gmap3({
+	window.map.gmap3({
     action:'getRoute',
     options:{
       origin:origin_wpt,
@@ -293,8 +282,8 @@ function secondsToTime(secs)
 	return obj;
 }
 
-function toSelector(latlng){
-  var ll = latlng.lat().toString() + 'BREAK' + latlng.lng().toString();
+function toSelector(latLng){
+  var ll = latLng.lat().toString() + 'BREAK' + latLng.lng().toString();
   return ll.replace(/\./g,"_");
 }
 
@@ -307,25 +296,22 @@ function toLatLng(id) {
 
 function deleteWaypoint(control) {
 	var tag = control.getAttribute("data-tag");
-	var $map = $('#route_builder_map');
 	var clear = {action:'clear', name:'marker', tag:''};
 	clear.tag = tag;
-	$map.gmap3(clear);
+	window.map.gmap3(clear);
 	var li = $('#' + tag);
 	var ul = li.parent();
-	// ul.css("height","auto");
 	li.remove();
-	// ul.height(ul.height());
-	redrawDirections($map);
+	redrawDirections();
 }
 
-function redrawDirections($map) {
+function redrawDirections() {
 	var clear = {action:'clear', name:'directionrenderer'};
-	$map.gmap3(clear);
+	window.map.gmap3(clear);
 	clearDistanceDurationTotals();
 	window.jumps = [];
 	$('#route_waypoints li').each(function(index, listItem) {
-		updateDirections($map, listItem.id); 
+		updateDirections(listItem.id); 
 	});
 }
 
@@ -343,14 +329,13 @@ $('#sortable_waypoints').livequery(function(){
 		tolerance: 'pointer',
 		cursor: 'move',
 	  update: function(event, ui) {
-			$map = $('#route_builder_map');
-			redrawDirections($map);
+			redrawDirections();
 		}
 	});
 	$(this).disableSelection();
 });
 
-$('form.new_route').livequery(function(){
+$('form.new_route,form.edit_route').livequery(function(){
   $(this).submit(function(event) { 
     var jumps = "";
     $.each(window.jumps, function(i, rte) {
@@ -366,3 +351,10 @@ $('form.new_route').livequery(function(){
 		$('#route_itn_file').val(itn_file);
   });
 });  
+
+$('#route_box.edit_mode').livequery(function(){
+  $.each(window.route.waypoints, function(i, wpt) {
+		latLng = new google.maps.LatLng(wpt.latitude, wpt.longitude);
+		addMarker(latLng);
+	});
+});
