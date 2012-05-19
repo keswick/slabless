@@ -4,7 +4,7 @@
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *= require_self 
 */
-@import "map-layout.css.scss";
-@import "styles-default.css.scss";
+@import "map_layout.css.scss";
+@import "styles_default.css.scss";
 @import "routes.css.scss";
 
