@@ -80,13 +80,13 @@ $('#expand_waypoints').livequery ->
 
 $('#info_pane_close').livequery ->
   $(this).click( (event) ->   
-    $('#info_pane').toggleClass('hidden')
+    $('#info_pane').addClass('hidden')
   )
 
 $('#export_route').livequery ->
   $(this).click( (event) ->   
-    $('#info_pane').toggleClass('hidden')
     $('#info_pane_content').html(to_navigon(routes[0]))
+    $('#info_pane').removeClass('hidden')
   )
 
 to_navigon = (route) ->
