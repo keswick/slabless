@@ -146,11 +146,11 @@ $('#route_builder_map').livequery(function(){
         zoom: 8
       },
       events:{
-        rightclick:function(map, event){
+        click:function(map, event){
           current = event;
           menu.open(current);
         },
-        click: function(){
+        rightclick: function(){
           menu.close();
         },
         dragstart: function(){
@@ -177,7 +177,7 @@ function addMarker(latLng){
     },
     tag: ll_id,
     events: {
-      rightclick: function(marker, event){
+      click: function(marker, event){
 			  // console.log('in click event');
 			  var map = $(this).gmap3('get'),
 			    infowindow = $(this).gmap3({action:'get', name:'infowindow'});
