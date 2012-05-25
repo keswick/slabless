@@ -14,5 +14,6 @@
 //= require gmap3
 //= require maps
 //= require route_builder
+//= require jquery.ui.touch-punch.min.js
 // require_tree .
 

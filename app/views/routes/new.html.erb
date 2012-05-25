@@ -6,6 +6,7 @@
 		<span><a href="javascript:void(0);" title="Show all routes with current map boundaries" id="show_routes_within_map" class="inactive action_link">routes</a></span>
 		<span><a href="javascript:void(0);" title="Create a new route" id="add_route" class="inactive action_link">add...</a></span>
 		<span><a href="javascript:void(0);" title="Export this route to a GPS friendly format" id="export_route" class="inactive action_link">export...</a></span>
+		<span><%= link_to "Modify", "javascript:void(0);", :id => "edit_route", :class => "inactive action_link" %></span>
 		<span>
 			<% if current_user %>
 			  <%= link_to "sign out", signout_path, :id => "login", :class => "active action_link" %>
