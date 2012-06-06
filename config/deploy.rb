@@ -30,12 +30,15 @@ namespace :deploy do
     sudo "ln -nfs #{current_path}/config/unicorn_init.sh /etc/init.d/unicorn_#{application}"
     run "mkdir -p #{shared_path}/config"
     put File.read("config/mongoid.example.yml"), "#{shared_path}/config/mongoid.yml"
+    run "mkdir -p #{shared_path}/config/initializers"
+    put File.read("config/initializers/omniauth.example.rb"), "#{shared_path}/config/initializers/omniauth.rb"
     puts "Now edit the config files in #{shared_path}."
   end
   after "deploy:setup", "deploy:setup_config"
 
   task :symlink_config, roles: :app do
     run "ln -nfs #{shared_path}/config/mongoid.yml #{release_path}/config/mongoid.yml"
+    run "ln -nfs #{shared_path}/config/initializers/omniauth.rb #{release_path}/config/initializers/omniauth.rb"
   end
   after "deploy:finalize_update", "deploy:symlink_config"
 

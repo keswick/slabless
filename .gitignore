@@ -5,3 +5,6 @@
 *.sqlite
 log/development.log
 tmp/*
+/config/database.yml
+/config/mongoid.yml
+/config/initializers/omniauth.rb
