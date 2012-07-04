@@ -1,0 +1,14 @@
+<div id="route_ratings" class="hidden">
+			  <% if @route.ratings.size > 0 %>
+				  <h2>Ratings</h2>
+				  <% for rating in @route.ratings %>
+				    <p><%= rating.overall %> <%= rating.comment %></p>
+				  <% end %>
+				<% end %>     
+				<h2>New Rating</h2>      
+				<%= form_for [@route, Rating.new] do |f| %>
+				  <p><%= f.label :overall %> <%= f.text_field :overall %></p>
+				  <p><%= f.text_area :comment, :rows => 10 %></p>
+				  <p><%= f.submit %></p>
+				<% end %>
+			</div>

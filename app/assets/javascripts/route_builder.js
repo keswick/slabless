@@ -112,6 +112,7 @@ $('#route_builder_map').livequery(function(){
   menu.add('Add Waypoint', 'waypoint separator', 
     function(){
       menu.close();
+			moveToWaypointTab();
       addMarker(current.latLng);
     });
   
@@ -203,7 +204,7 @@ function writeWaypointLI(marker){
 	var latLng = marker.getPosition();
 	var selector = toSelector(latLng);
 	var max_height = (window.map.height() * .75) - ($('#route_box').height() - ul.height());
-	if (ul.height() < max_height) { ul.height("auto") };
+	if (ul.height() < max_height) { ul.height("auto") }
 	ul.append('<li id="' + selector + '" class="sortable_icon"></li>');
 	ul.height(ul.height());
   window.map.gmap3({
@@ -223,13 +224,14 @@ function updateDirections(selector){
 	var origin_wpt = toLatLng(prev_li.attr('id'));
 	if (!origin_wpt) return;
 	var dest_wpt = toLatLng(selector)
+	var slabsAllowed = $('#route_slabs_allowed').is(':checked')
 	window.map.gmap3({
     action:'getRoute',
     options:{
       origin:origin_wpt,
       destination:dest_wpt,
       travelMode: google.maps.DirectionsTravelMode.DRIVING,
-			avoidHighways: true
+			avoidHighways: !slabsAllowed
     },
     callback: function(results){
       if (!results) return;
@@ -299,8 +301,8 @@ function deleteWaypoint(control) {
 	var clear = {action:'clear', name:'marker', tag:''};
 	clear.tag = tag;
 	window.map.gmap3(clear);
+	moveToWaypointTab();
 	var li = $('#' + tag);
-	var ul = li.parent();
 	li.remove();
 	redrawDirections();
 }
@@ -349,12 +351,29 @@ $('form.new_route,form.edit_route').livequery(function(){
 			itn_file += ll.lng() + '|' + ll.lat() + '|' + listItem.textContent + '|0|\n' 
 		});
 		$('#route_itn_file').val(itn_file);
+		$('#route_meters').val($('#distance_duration').data('meters'));
+		$('#route_seconds').val($('#distance_duration').data('seconds'));
   });
 });  
 
+$('#route_box_tabs').livequery(function(){
+  $("#route_box_tabs").tabs();
+});
+
 $('#route_box.edit_mode').livequery(function(){
+	moveToWaypointTab();
   $.each(window.route.waypoints, function(i, wpt) {
 		latLng = new google.maps.LatLng(wpt.latitude, wpt.longitude);
 		addMarker(latLng);
 	});
 });
+
+function moveToWaypointTab() {
+	$("#route_box_tabs").tabs('select', 1); 
+}
+
+$('#distance_duration.show').livequery(function(){
+	$(this).data("seconds", parseInt($(this).attr('data-seconds')));
+	$(this).data("meters", parseInt($(this).attr('data-meters')));
+	setDistanceAndTime(0, 0)
+})

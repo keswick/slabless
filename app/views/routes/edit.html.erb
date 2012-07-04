@@ -6,31 +6,26 @@
 	<div id="route_builder_map"></div>
 </div>
 
-<div id="action_box">
-		<span><a href="javascript:void(0);" title="Show all routes with current map boundaries" id="show_routes_within_map" class="inactive action_link">routes</a></span>
-		<span><a href="javascript:void(0);" title="Create a new route" id="add_route" class="inactive action_link">add...</a></span>
-		<span><a href="javascript:void(0);" title="Export this route to a GPS friendly format" id="export_route" class="inactive action_link">export...</a></span>
-		<span><%= link_to "Modify", "javascript:void(0);", :id => "edit_route", :class => "inactive action_link" %></span>
-		<span>
-			<% if current_user %>
-			  <%= link_to "sign out", signout_path, :id => "login", :class => "active action_link" %>
-			<% else %>
-			  <%= link_to "sign in", "/auth/facebook", :id => "login", :class => "active action_link" %>
-			<% end %>
-		</span>
-</div>
+<%= render :partial => "map_menu", :locals => {:view => "edit"} %>
 
 <div id="route_box" class="edit_mode">
-	<div id="route_title">Slab Less - Edit Route</div>
-	<div id="route_content">
-		<% unless notice.nil? %>
-			<p id="notice"><%= notice %></p>
-		<% end %>
-		<%= render 'form' %>
-		<div id="distance_duration" data-seconds="0" data-meters="0"></div>
-		<div id="route_waypoints">
+	<div id="route_box_tabs">
+		<ul>
+			<li><a href="#info_tab"><span>Info</span></a></li>
+			<li><a href="#waypoint_tab"><span>Waypoints</span></a></li>
+		</ul>
+		<div id="info_tab">
+			<% unless notice.nil? %>
+				<p id="notice"><%= notice %></p>
+			<% end %>
+			<%= render 'form' %>
+		</div>
+		<div id="waypoint_tab">
+			<div id="distance_duration" data-seconds="0" data-meters="0"></div>
+			<div id="route_waypoints">
 				<ul id="sortable_waypoints">
 				</ul>
+			</div>
 		</div>				
 	</div>
 </div>

@@ -8,78 +8,43 @@
 	<div id="map_canvas"></div>
 </div>
 
-<div id="action_box">
-		<span><a href="/routes" title="Show all routes with current map boundaries" id="show_routes_within_map" class="active action_link">Routes</a></span>
-		<span><a href="/routes/new" title="Create a new route" id="add_route" class="active action_link">Add...</a></span>
-		<span><a href="javascript:void(0);" title="Export this route to a GPS friendly format" id="export_route" class="active action_link">Export...</a></span>
-		<span><%= link_to "Modify", edit_route_path(@route), :id => "edit_route", :class => "active action_link" %></span>
-		<span>
-			<% if current_user %>
-			  <%= link_to "Sign Out", signout_path, :id => "login", :class => "active action_link" %>
-			<% else %>
-			  <%= link_to "Sign in", "/auth/facebook", :id => "login", :class => "active action_link" %>
-			<% end %>
-		</span>
-</div>
+<%= render :partial => "map_menu", :locals => {:view => "show"} %>
 
 <div id="route_box">
-	<div id="route_title">Slab Less Routes</div>
-	<div id="route_content">
-		<% unless notice.nil? %>
-			<p id="notice"><%= notice %></p>
-		<% end %>
-		<% unless @route.empty? || @route.confirmed? %>
-			<%= form_for(@route) do |f| %>
-			  <div class="field">
-			    <%= f.hidden_field :jumps %>
-			  </div>
-			  <div class="actions">
-			    <%= f.submit "Confirm Map" %>
-			  </div>
-			<% end %>
-		<% end %>
-		
+	<div id="route_box_tabs">
 		<ul>
-			<li id="route_name"><%= @route.name %></li>
-			<li><%= @route.destination %></li>
-			<li><%= link_to("#{@route.waypoints.size} waypoints", "javascript:void(0);", :id => "expand_waypoints") unless @route.waypoints.empty? %></li>
+			<li><a href="#info_tab"><span>Info</span></a></li>
+			<li><a href="#waypoint_tab"><span>Waypoints</span></a></li>
 		</ul>
-		
-		<div id="route_waypoints" class="hidden">
-		  <% unless @route.waypoints.empty? %>
-				<ul>
-				<% for waypoint in @route.waypoints %>
-		  		<li><%= waypoint.name %></li>
+		<div id="info_tab">
+			<% unless notice.nil? %>
+				<p id="notice"><%= notice %></p>
+			<% end %>		
+			<ul>
+				<li id="route_name"><%= @route.name %></li>
+				<li><%= @route.destination %></li>
+				<li>Visibility: <%= @route.visibility.capitalize %></li>
+				<li>Slabs Allowed: <%= @route.slabs_allowed == "1" ? "Yes" : "No" %>
+			</ul>
+			<% if current_user.can_update?(@route) %>
+				<div id="route_crud_actions">
+					<%= link_to image_tag('edit.png', :border => 0), edit_route_path(@route), :title => "Modify this route" %> 
+					<%= link_to image_tag('delete.png', :border => 0), @route, :title => "Delete this route", confirm: 'Are you sure you want to delete this route?', method: :delete %></div>
 				<% end %>
-				</ul>
-			<% end %>
-		</div>
-		
-		<div id="route_ratings" class="hidden">
-		  <% if @route.ratings.size > 0 %>
-			  <h2>Ratings</h2>
-			  <% for rating in @route.ratings %>
-			    <p><%= rating.overall %> <%= rating.comment %></p>
-			  <% end %>
-			<% end %>
-      
-			<h2>New Rating</h2>
-      
-			<%= form_for [@route, Rating.new] do |f| %>
-			  <p><%= f.label :overall %> <%= f.text_field :overall %></p>
-			  <p><%= f.text_area :comment, :rows => 10 %></p>
-			  <p><%= f.submit %></p>
-			<% end %>
-		</div>	
-		
-		<% if @route.waypoints.empty? %>
-			<h2>Add Waypoints</h2>
-			<%= form_for [@route, ItnFile.new] do |f| %>
-			  <p><%= f.text_area :content, :rows => 10 %></p>
-			  <p><%= f.submit %></p>
-			<% end %>
-		<% end %>
-  	
+			<%= render :partial => 'ratings' %>
+		</div>		
+		<div id="waypoint_tab">
+			<div id="distance_duration" class="show" data-seconds="<%= @route.seconds %>" data-meters="<%= @route.meters %>"></div>
+			<div id="route_waypoints">
+				<% unless @route.waypoints.empty? %>
+					<ul>
+					<% for waypoint in @route.waypoints %>
+			  		<li><%= waypoint.name %></li>
+					<% end %>
+					</ul>
+				<% end %>
+			</div>				
+		</div>			 	
 	</div>
 </div>
 <div id="info_pane" class="hidden" style="position: absolute; top: 296px; left: 772px; ">

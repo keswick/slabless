@@ -1,0 +1,44 @@
+<div id="action_box">
+		<span>
+			<% if view.in?(["index", "show"]) %>
+				<%= link_to "routes...", "javascript:void(0);", :id => "show_routes_within_map", :class => "active panel_link", :title => "Show all routes with current map boundaries", 'data-panel' => "filter_panel" %>
+			<% else %>
+				<div id="show_routes_within_map" class="inactive panel_link">routes...</div>
+			<% end %>
+		</span>
+		<span>
+			<% if current_user.can_create?(Route) && view.in?(["index", "show"]) %>
+				<%= link_to "add...", "javascript:void(0);", :id => "add_route", :class => "active panel_link", :title => "Create a new route", 'data-panel' => "add_panel" %>
+			<% else %>
+				<div id="add_route" class="inactive panel_link">add</div>
+			<% end %>
+		</span>
+		<span>
+			<% if view == "show" %>
+				<%= link_to "export...", "javascript:void(0);", :id => "export_route", :class => "active panel_link", :title => "Export this route to a GPS friendly format", 'data-panel' => "export_panel" %>
+			<% else %>
+				<div id="export_route" class="inactive panel_link">export...</div>
+			<% end %>
+		</span>
+		<span>
+			<% if current_user.signed_in? %>
+			  <%= link_to "sign out", signout_path, :id => "login", :class => "active panel_link" %>
+			<% else %>
+			  <%= link_to "sign in", "/auth/facebook", :id => "login", :class => "active panel_link", :title => "Sign in using Facebook" %>
+			<% end %>
+		</span>
+</div>
+<div id="filter_panel" class="panel hidden">
+	<input type="radio" name="routes_filter" id="filter_my_routes" value="my_routes" /> <label for="filter_my_routes">Routes I created</label><br/>
+	<input type="radio" name="routes_filter" id="filter_recommended_routes" value="recommended_routes" /> <label for="filter_recommended_routes">Recommended routes</label><br/>
+	<input type="radio" name="routes_filter" id="filter_liked_routes" value="liked_routes" /> <label for="filter_liked_routes">Routes I Liked</label>
+</div>
+<div id="add_panel" class="panel hidden">
+	<%= link_to "Build new route", new_route_path, :class => "menu_item build" %>
+	<%= link_to "Import itn file", new_route_path, :class => "menu_item import" %>
+</div>
+<div id="export_panel" class="panel hidden">
+	<input type="radio" name="export_route" id="export_navigon" value="navigon" /> <label for="export_navigon">Export to Navigon</label><br/>
+	<input type="radio" name="export_route" id="export_itn" value="itn" /> <label for="export_itn">Export to ITN</label><br/>
+</div>
+

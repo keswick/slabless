@@ -9,6 +9,7 @@ gem 'rails', '3.1.1'
 gem "mongoid", "~> 2.4"
 gem "bson_ext", "~> 1.5"
 gem "mongoid_spacial"
+gem "authority"
 
 gem 'omniauth-facebook'
 
@@ -32,7 +33,9 @@ gem 'unicorn'
 gem 'capistrano'
 
 # To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
+group :development do
+	gem 'ruby-debug19', :require => 'ruby-debug'
+end
 
 group :test do
   # Pretty printed test output

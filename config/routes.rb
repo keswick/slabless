@@ -1,15 +1,17 @@
 Slabless::Application.routes.draw do
-  resources :overview_points
 
   resources :routes do
+    # get 'index', :on => :member
     resources :ratings
     resources :waypoints
+    resources :overview_points
   end
   
   match "/auth/:provider/callback" => "sessions#create"
   match "/signout" => "sessions#destroy", :as => :signout
-
-  get "routes/index"
+  match "my_routes" => "routes#index", :defaults => { :filter => 'my' }
+  match "recommended_routes" => "routes#index", :defaults => { :filter => 'recommended' }
+  match "liked_routes" => "routes#index", :defaults => { :filter => 'liked' }
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,5 +1,6 @@
 calc_route = (route) ->
   g_waypts = (set_g_waypt(waypt.latitude, waypt.longitude) for waypt in route.waypoints)
+  avoidHighways = if route.slabs_allowed == "1" then false else true
   #marker = setup_marker()
   #marker.setPosition(g_waypts[0].location)
   #marker.setMap(map)
@@ -9,7 +10,7 @@ calc_route = (route) ->
     orig = g_waypts[i].location
     dest = g_waypts[end].location
     wpts = g_waypts.slice(i+1, end)
-    calc_jump(orig, dest, wpts)
+    calc_jump(orig, dest, wpts, avoidHighways)
     i = i + 9
 
 set_g_waypt = (lat, lng) ->
@@ -30,14 +31,14 @@ render_route = (directions_response) ->
   renderer.setMap(window.map_canvas)
   renderer.setDirections(directions_response)
 
-calc_jump = (orig, dest, wpts) ->
+calc_jump = (orig, dest, wpts, avoidHighways) ->
   request = 
     origin: orig
     destination: dest
     waypoints: wpts
     travelMode: "DRIVING"
-    avoidHighways: true
-    avoidTolls: true
+    avoidHighways: avoidHighways
+    avoidTolls: avoidHighways
   dirService = new google.maps.DirectionsService()
   dirService.route(request, (response, status) ->
     if status == google.maps.DirectionsStatus.OK
@@ -68,23 +69,23 @@ $('form.edit_route').livequery ->
     $('#route_jumps').val(jumps)
   )
 
-$('#show_routes_within_map').livequery ->
-  $(this).click( (event) ->   
-    this.href += '?bounds=' + window.map_canvas.getBounds().toUrlValue()
+$(document).ready ->
+  $('.panel_link').click( (event) ->
+    $('.panel').addClass('hidden')
+    selector = '#' + $(this).data('panel')
+    $(selector).toggleClass('hidden')	
   )
-
-$('#expand_waypoints').livequery ->
-  $(this).click( (event) ->   
-    $('#route_waypoints').toggleClass('hidden')
+  $('#filter_panel > input[type="radio"]').click( (event) -> 
+    path = '/' + $(this).attr('value') + '?bounds=' + window.map_canvas.getBounds().toUrlValue()
+    window.location.assign(path)
   )
-
-$('#info_pane_close').livequery ->
-  $(this).click( (event) ->   
+  $('#info_pane_close').click( (event) ->   
     $('#info_pane').addClass('hidden')
   )
-
-$('#export_route').livequery ->
-  $(this).click( (event) ->   
+  $('#route_slabs_allowed').click( (event) ->   
+    redrawDirections()
+  )
+  $('#export_navigon').click( (event) ->   
     $('#info_pane_content').html(to_navigon(routes[0]))
     $('#info_pane').removeClass('hidden')
   )

@@ -1,8 +1,9 @@
 <script type="text/javascript">
 	<% unless @routes.empty? %>
+		<%= @bounds[0][:lat] %>
 		<% g_adjustment = 0.034 %>
-		var sw = new google.maps.LatLng(<%= @sw_corner[:lat].to_f + g_adjustment %>, <%= @sw_corner[:lng].to_f + g_adjustment %>);
-		var ne = new google.maps.LatLng(<%= @ne_corner[:lat].to_f - g_adjustment %>, <%= @ne_corner[:lng].to_f - g_adjustment %> );
+		var sw = new google.maps.LatLng(<%= @bounds[0][:lat].to_f + g_adjustment %>, <%= @bounds[0][:lng].to_f + g_adjustment %>);
+		var ne = new google.maps.LatLng(<%= @bounds[1][:lat].to_f - g_adjustment %>, <%= @bounds[1][:lng].to_f - g_adjustment %> );
 		bounds = new google.maps.LatLngBounds(sw,ne);
 	<% end %>
   routes = <%= raw @routes.to_json %>;
@@ -12,19 +13,7 @@
 	<div id="map_canvas"></div>
 </div>
 
-<div id="action_box">
-		<span><a href="/routes" title="Show all routes with current map boundaries" id="show_routes_within_map" class="active action_link">routes</a></span>
-		<span><a href="/routes/new" title="Create a new route" id="add_route" class="active action_link">add...</a></span>
-		<span><a href="javascript:void(0);" title="Export this route to a GPS friendly format" id="export_route" class="inactive action_link">export...</a></span>
-		<span><%= link_to "Modify", "javascript:void(0);", :id => "edit_route", :class => "inactive action_link" %></span>
-		<span>
-			<% if current_user %>
-			  <%= link_to "sign out", signout_path, :id => "login", :class => "active action_link" %>
-			<% else %>
-			  <%= link_to "sign in", "/auth/facebook", :id => "login", :class => "active action_link" %>
-			<% end %>
-		</span>
-</div>
+<%= render :partial => "map_menu", :locals => {:view => "index"} %>
 
 <% unless @routes.empty? %>
 	<div id="route_box">

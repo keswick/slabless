@@ -11,23 +11,42 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form_field">
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </div>
-  <div class="field">
+  <div class="form_field">
     <%= f.label :destination %><br />
     <%= f.text_field :destination %>
   </div>
+	Visibility:
+	<div>
+    <%= f.radio_button :visibility, 'private' %>
+    <%= f.label :visibility, 'Private - not visible to others', :value => 'private' %><br />
+		<%= f.radio_button :visibility, 'shared' %>
+    <%= f.label :visibility, 'Shareable - anyone who knows the link can see it', :value => 'shared' %><br />
+		<%= f.radio_button :visibility, 'recommended' %>
+    <%= f.label :visibility, 'Recommended (choice routes only please) - shows up in public searches of the area', :value => 'recommended', :id => 'visibility_recommended_label' %><br />
+  </div>
+	<div class="form_field">
+    <%= f.check_box :slabs_allowed %>
+		<%= f.label :slabs_allowed, 'Slabs Allowed' %><br />
+  </div>
 	<div class="field">
-    <%= f.label :itn_file, "Waypoints" %><br />
-    <%= f.text_area :itn_file, :rows => 3 %>
+    <%= f.hidden_field :itn_file %>
   </div>
 	<div class="field">
     <%= f.hidden_field :jumps %>
   </div>
+	<div class="field">
+    <%= f.hidden_field :meters %>
+  </div>
+	<div class="field">
+    <%= f.hidden_field :seconds %>
+  </div>
   <div class="actions">
-    <%= f.submit %> <%= link_to 'Cancel', routes_path %>
+		<% path = @route.empty? ? routes_path : @route %>
+    <%= f.submit %> <%= link_to 'Cancel', path %>
   </div>
 <% end %>
 

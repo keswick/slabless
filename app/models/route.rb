@@ -2,17 +2,27 @@ class Route
   include Mongoid::Document
   include Mongoid::Spacial::Document
   include Mongoid::Timestamps
+  
+  include Authority::Abilities
+  self.authorizer_name = 'RouteAuthorizer'
+
   field :name
   field :destination
   field :jumps
   field :itn_file
+  field :owner_id
+  field :visibility
+  field :slabs_allowed
+  field :like_count
+  field :meters
+  field :seconds
   embeds_many :ratings
   embeds_many :waypoints
   embeds_many :overview_points
   
   spacial_index 'overview_points.latlng'
   
-  validates_presence_of :name, :destination
+  validates_presence_of :name, :destination, :visibility
   
   after_save :parse_itn, :if => :itn_file_changed?
   after_save :parse_jumps, :if => :jumps_changed?
@@ -24,7 +34,7 @@ class Route
   def confirmed?
     jumps.nil? ? false : jumps.length != 0
   end
-  
+    
   protected
   
   def parse_itn

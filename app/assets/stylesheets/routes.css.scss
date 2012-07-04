@@ -33,14 +33,6 @@
 	{
 		line-height: 16px;
 	}
-#route_actions
-{
-	display: block;
-	width: 100%;
-	text-align: center;
-	font-size: 12px;
-	margin: 6px 0px 10px 0px;
-}
 #route_waypoints
 {
 	max-height:80%;
@@ -53,7 +45,7 @@
 	{ 
 		padding: 0.4em; 
 		padding-left: 2.5em; 
-		font-size: 1.1em; 
+		font-size: 0.9em; 
 		background-color: white;
 		margin-bottom: 2px;
 		height: 16px;
@@ -61,8 +53,8 @@
 		border-color: grey;
 		border-style: solid;
 		white-space: nowrap;
-		width: 265px;
 		overflow-x: hidden;
+		width: 276px;
 	}
   #route_waypoints li span 
 	{ 
@@ -117,6 +109,12 @@
 .menu_item.delete{
 	background-image: url(delete.png);
 }
+.menu_item.build{
+	background-image: url(edit.png);
+}
+.menu_item.import{
+	background-image: url(import.png);
+}
 .menu_item.hover{
 	background-color: #d6e9f8;
 }
@@ -137,6 +135,11 @@
 	font-size: 15px;
 	font-weight: bold;
 	margin-top: 6px;
+}
+#visibility_recommended_label {
+	display: block;
+	margin-top: -1.9em;
+	margin-left: 1.75em;
 }
 #info_pane { 
 	position: absolute; 
@@ -170,16 +173,35 @@
 	overflow-x: hidden; 
 	clear: both; 
 }
-
-#action_box { font-size: 11px; border: 1px solid #000; margin-bottom: 10px; position: absolute; top: 7px; left: 100px; width: 420px; line-height: 16px; overflow: hidden; white-space: nowrap; background: #FFF; }
-#action_box .action_link { text-decoration: none; display: block; width: 80px; padding: 1px; text-align: center; float: left; border-top: 1px solid #FFF; border-right: 1px solid #BEBEBE; border-bottom: 1px solid #BEBEBE; border-left: 1px solid #FFF; }
+#action_box { font-size: 11px; border: 1px solid #000; margin-bottom: 10px; position: absolute; top: 7px; left: 100px; width: 336px; line-height: 16px; overflow: hidden; white-space: nowrap; background: #FFF; }
+#action_box .panel_link { text-decoration: none; display: block; width: 80px; padding: 1px; text-align: center; float: left; border-top: 1px solid #FFF; border-right: 1px solid #BEBEBE; border-bottom: 1px solid #BEBEBE; border-left: 1px solid #FFF; }
 #action_box .active {
 	color: #000;
 }
 #action_box .inactive {
 	color: gray;
 }
-
+#filter_panel {
+	left: 100px;
+}
+#add_panel {
+	left: 184px;
+}
+#export_panel {
+	left: 264px;
+}
+.panel {
+	padding: 7px 5px 5px 5px;
+	width: 130px;
+	background-color: 
+	white;
+	position: absolute;
+	top: 31px;
+	border: 1px solid #BEBEBE;
+}
+#route_crud_actions {
+	text-align: right;
+}
 
 
 

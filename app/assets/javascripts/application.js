@@ -10,6 +10,7 @@
 //= require jquery.ui.widget.min.js
 //= require jquery.ui.mouse.min.js
 //= require jquery.ui.sortable.min.js
+//= require jquery.ui.tabs.min.js
 //= require livequery
 //= require gmap3
 //= require maps
