@@ -22,7 +22,7 @@ class Route
   
   spacial_index 'overview_points.latlng'
   
-  validates_presence_of :name, :destination, :visibility
+  validates_presence_of :name, :owner_id
   
   after_save :parse_itn, :if => :itn_file_changed?
   after_save :parse_jumps, :if => :jumps_changed?

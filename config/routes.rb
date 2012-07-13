@@ -1,5 +1,6 @@
 Slabless::Application.routes.draw do
 
+  resources :itns
   resources :routes do
     # get 'index', :on => :member
     resources :ratings

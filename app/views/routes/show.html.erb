@@ -23,7 +23,7 @@
 			<ul>
 				<li id="route_name"><%= @route.name %></li>
 				<li><%= @route.destination %></li>
-				<li>Visibility: <%= @route.visibility.capitalize %></li>
+				<li>Visibility: <%= @route.visibility.try(:capitalize) %></li>
 				<li>Slabs Allowed: <%= @route.slabs_allowed == "1" ? "Yes" : "No" %>
 			</ul>
 			<% if current_user.can_update?(@route) %>

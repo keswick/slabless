@@ -79,6 +79,10 @@ $(document).ready ->
     path = '/' + $(this).attr('value') + '?bounds=' + window.map_canvas.getBounds().toUrlValue()
     window.location.assign(path)
   )
+  $('#import_itn').click( (event) ->
+    $('#itn_import_form').load('/itns/new')
+    return false
+  )
   $('#info_pane_close').click( (event) ->   
     $('#info_pane').addClass('hidden')
   )

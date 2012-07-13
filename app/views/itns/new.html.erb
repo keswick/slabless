@@ -1,0 +1,10 @@
+<%= form_tag '/itns', :multipart => true do  %>
+  Select your local itn file then click 'Import'
+	<div>
+		<%= file_field_tag :itn_file %>
+	</div>
+	<div class="actions">
+    <%= submit_tag "Import" %>
+  </div>
+
+<% end %>
