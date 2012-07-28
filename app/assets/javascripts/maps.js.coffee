@@ -69,6 +69,11 @@ $('form.edit_route').livequery ->
     $('#route_jumps').val(jumps)
   )
 
+$('#info_pane').livequery ->
+  top = Math.floor(window.innerHeight/2 - 200) + 'px'
+  left = Math.floor(window.innerWidth/2 - 200) + 'px'
+  $(this).css({'top': top, 'left': left})
+
 $(document).ready ->
   $('.panel_link').click( (event) ->
     $('.panel').addClass('hidden')

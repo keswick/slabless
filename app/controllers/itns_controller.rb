@@ -16,7 +16,6 @@ class ItnsController < ApplicationController
     @route.name = params[:itn_file].original_filename[/(.*)(\..*)/,1]
     @route.itn_file = params[:itn_file].read
     @route.visibility = "none"
-    debugger
     respond_to do |format|
       if @route.save
         format.html { redirect_to edit_route_path(@route) }
