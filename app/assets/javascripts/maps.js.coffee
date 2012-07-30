@@ -98,6 +98,10 @@ $(document).ready ->
     $('#info_pane_content').html(to_navigon(routes[0]))
     $('#info_pane').removeClass('hidden')
   )
+  $('#export_itn').click( (event) ->   
+    path = '/routes/export/' + routes[0]._id
+    window.location.assign(path)
+  )
 
 to_navigon = (route) ->
   nav_waypts = (set_nav_waypt(waypt.latitude, waypt.longitude) for waypt in route.waypoints)
