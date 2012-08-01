@@ -9,7 +9,7 @@ class RouteAuthorizer < ApplicationAuthorizer
   end
 
   def readable_by?(user)
-    true
+    resource.visibility == "private" ? resource.owner_id == user.id : true
   end  
   
   def updatable_by?(user)
@@ -21,6 +21,6 @@ class RouteAuthorizer < ApplicationAuthorizer
     # considered forbidden.
     debugger
     false
-  end
+  end  
   
 end

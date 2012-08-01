@@ -1,6 +1,5 @@
 <script type="text/javascript">
 	<% unless @routes.empty? %>
-		<%= @bounds[0][:lat] %>
 		<% g_adjustment = 0.034 %>
 		var sw = new google.maps.LatLng(<%= @bounds[0][:lat].to_f + g_adjustment %>, <%= @bounds[0][:lng].to_f + g_adjustment %>);
 		var ne = new google.maps.LatLng(<%= @bounds[1][:lat].to_f - g_adjustment %>, <%= @bounds[1][:lng].to_f - g_adjustment %> );

@@ -45,7 +45,7 @@
     <%= f.hidden_field :seconds %>
   </div>
   <div class="actions">
-		<% path = @route.empty? ? routes_path : @route %>
+	<% path = @route.empty? ? routes_path : @route %>
     <%= f.submit %> <%= link_to 'Cancel', path %>
   </div>
 <% end %>

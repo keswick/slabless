@@ -1,7 +1,6 @@
 Slabless::Application.routes.draw do
 
   resources :routes do
-    # get 'index', :on => :member
     resources :ratings
     resources :waypoints
     resources :overview_points
