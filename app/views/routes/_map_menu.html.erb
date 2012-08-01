@@ -34,8 +34,9 @@
 	<input type="radio" name="routes_filter" id="filter_liked_routes" value="liked_routes" /> <label for="filter_liked_routes">Routes I Liked</label>
 </div>
 <div id="add_panel" class="panel hidden">
-	<%= link_to "Build new route", new_route_path, :class => "menu_item build" %>
-	<%= link_to "Import itn file", new_route_path, :class => "menu_item import" %>
+	<%= link_to "Build new route", new_route_path, :class => "menu_item build" %><br />
+	<%= link_to "Import itn file", "javascript:void(0)", :id => "import_itn", :class => "menu_item import" %>
+	<div id="itn_import_form"></div>
 </div>
 <div id="export_panel" class="panel hidden">
 	<input type="radio" name="export_route" id="export_navigon" value="navigon" /> <label for="export_navigon">Export to Navigon</label><br/>

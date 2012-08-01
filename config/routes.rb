@@ -1,6 +1,8 @@
 Slabless::Application.routes.draw do
 
+  resources :itns
   resources :routes do
+    get 'export', :on => :member
     resources :ratings
     resources :waypoints
     resources :overview_points

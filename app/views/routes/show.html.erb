@@ -23,7 +23,7 @@
 			<ul>
 				<li id="route_name"><%= @route.name %></li>
 				<li><%= @route.destination %></li>
-				<li>Visibility: <%= @route.visibility.capitalize %></li>
+				<li>Visibility: <%= @route.visibility.try(:capitalize) %></li>
 				<li>Slabs Allowed: <%= @route.slabs_allowed == "1" ? "Yes" : "No" %>
 			</ul>
 			<% if current_user.can_update?(@route) %>
@@ -47,7 +47,7 @@
 		</div>			 	
 	</div>
 </div>
-<div id="info_pane" class="hidden" style="position: absolute; top: 296px; left: 772px; ">
+<div id="info_pane" class="hidden" style="position: absolute;">
 	<a href="javascript:void(0);" title="Close Window" id="info_pane_close">&nbsp;</a>
 	<div id="info_pane_content">
 		<a name="top"></a>

@@ -10,7 +10,6 @@ gem "mongoid", "~> 2.4"
 gem "bson_ext", "~> 1.5"
 gem "mongoid_spacial"
 gem "authority"
-
 gem 'omniauth-facebook'
 
 # Gems used only for assets and not required

@@ -69,6 +69,11 @@ $('form.edit_route').livequery ->
     $('#route_jumps').val(jumps)
   )
 
+$('#info_pane').livequery ->
+  top = Math.floor(window.innerHeight/2 - 200) + 'px'
+  left = Math.floor(window.innerWidth/2 - 200) + 'px'
+  $(this).css({'top': top, 'left': left})
+
 $(document).ready ->
   $('.panel_link').click( (event) ->
     $('.panel').addClass('hidden')
@@ -79,6 +84,10 @@ $(document).ready ->
     path = '/' + $(this).attr('value') + '?bounds=' + window.map_canvas.getBounds().toUrlValue()
     window.location.assign(path)
   )
+  $('#import_itn').click( (event) ->
+    $('#itn_import_form').load('/itns/new')
+    return false
+  )
   $('#info_pane_close').click( (event) ->   
     $('#info_pane').addClass('hidden')
   )
@@ -88,6 +97,10 @@ $(document).ready ->
   $('#export_navigon').click( (event) ->   
     $('#info_pane_content').html(to_navigon(routes[0]))
     $('#info_pane').removeClass('hidden')
+  )
+  $('#export_itn').click( (event) ->   
+    path = '/routes/export/' + routes[0]._id
+    window.location.assign(path)
   )
 
 to_navigon = (route) ->

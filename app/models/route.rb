@@ -22,7 +22,7 @@ class Route
   
   spacial_index 'overview_points.latlng'
   
-  validates_presence_of :name, :destination, :visibility
+  validates_presence_of :name, :owner_id
   
   after_save :parse_itn, :if => :itn_file_changed?
   after_save :parse_jumps, :if => :jumps_changed?
@@ -30,9 +30,16 @@ class Route
   def empty?
     waypoints.size == 0    
   end
-  
   def confirmed?
     jumps.nil? ? false : jumps.length != 0
+  end
+  def to_itn
+    itn = ""
+    waypoints.each do |w|
+      row = [w.wgs84_lng, w.wgs84_lat, w.name, "0", "\n"].join("|")
+      itn << row
+    end
+    return itn
   end
     
   protected
@@ -56,7 +63,6 @@ class Route
       end
     end
   end
-  
   def parse_jumps
     overview_points.delete_all
     j_split = self.jumps.split(/--BREAK--/)
@@ -71,7 +77,6 @@ class Route
       end
     end
   end
-  
   def set_latlng_keys(p)
     return [p.keys[0], p.keys[1]]
   end

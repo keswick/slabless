@@ -87,6 +87,13 @@ class RoutesController < ApplicationController
     end
   end
   
+  def export
+    @route = Route.find(params[:id])
+    send_data @route.to_itn,
+      :type => 'text/itn',
+      :filename => "#{@route.name}.itn"
+  end
+   
   private
   
   def parse_coordinates(bounds)
