@@ -15,10 +15,10 @@ class Waypoint
     return id.gsub(/\./, "_")
   end
   def wgs84_lat
-    latitude[0..10].gsub(".", "") 
+    (loc[0]*100000).round.to_s 
   end
   def wgs84_lng
-    longitude[0..10].gsub(".", "")
+    (loc[1]*100000).round.to_s
   end
 
 end
